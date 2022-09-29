@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
     const Board = sequelize.define("Board", {
         title: {
-            type: Sequelize.STRING(255), //자료형 타입
+            type: DataTypes.STRING, //자료형 타입
                 allowNull: false //NULL 값 허용 여부
         },
         contents: {
-            type: Sequelize.TEXT,
+            type: DataTypes.TEXT,
                 allowNull: false
         }
         },{
@@ -18,4 +18,6 @@ module.exports = (sequelize, DataTypes) => {
             charset: 'utf8',
             collate: 'utf8_general_ci',
     });
+
+    return Board;
 }

@@ -1,30 +1,30 @@
 module.exports = (sequelize, DataTypes) => {
     const Users = sequelize.define("Users", {
         UserNumber : {
-            type: sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             primaryKey: true
         },
         nickname: {
-            type: Sequelize.STRING(50), //자료형 타입
+            type: DataTypes.STRING(50), //자료형 타입
             allowNull: false //NULL 값 허용 여부
         },
         enrolled: {
-            type: Sequelize.STRING(10),
+            type: DataTypes.STRING(10),
             allowNull: false,
         },
         grade: {
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         class: {
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         studentNo: {
-            type: Sequelize.STRING(50),
+            type: DataTypes.STRING(50),
             allowNull: false
         },
-        name: Sequelize.STRING(50),
+        name: DataTypes.STRING(50),
         allowNull: false
     }, {
         // 테이블에 대한 설정 지정// static init의 매개변수와 연결되는 옵션, model/index.js에서 연결

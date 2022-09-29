@@ -8,7 +8,7 @@ require("dotenv").config();
 app.use(express.json())
 console.log(process.env.JWT_SECRET)
 
-models.sequelize.sync({ force: false })
+models.sequelize.sync({ force: true })
     .then(() => {
         console.log('데이터베이스 연결 성공');
     })
@@ -51,14 +51,14 @@ function authenticateToken(req, res, next) {
 // }).catch((err) => {
 //     console.log("저장 Error: ", err);
 // });
-
-models.Users.findAll({
-    where: {password: "123456"}
-}).then(results => {
-    console.log(results[0].dataValues);
-}).catch(err => {
-    console.error(err);
-});
+//
+// models.Users.findAll({
+//     where: {password: "123456"}
+// }).then(results => {
+//     console.log(results[0].dataValues);
+// }).catch(err => {
+//     console.error(err);
+// });
 
 
 
