@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const Users = sequelize.define("Users", {
-        UserNumber : {
+        code : {
             type: DataTypes.INTEGER,
             primaryKey: true
         },
@@ -24,8 +24,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(50),
             allowNull: false
         },
-        name: DataTypes.STRING(50),
-        allowNull: false
+        name: {
+            type: DataTypes.STRING(50),
+            allowNull: false
+        },
     }, {
         // 테이블에 대한 설정 지정// static init의 매개변수와 연결되는 옵션, model/index.js에서 연결
         timestamps: false,      // true시 createAt, updateAt 컬럼 추가 각각 생성 및 수정 시 시간 반영

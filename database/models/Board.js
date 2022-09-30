@@ -1,12 +1,20 @@
 module.exports = (sequelize, DataTypes) => {
     const Board = sequelize.define("Board", {
+        boardCode : {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
         title: {
-            type: DataTypes.STRING, //자료형 타입
+            type: DataTypes.STRING(255), //자료형 타입
                 allowNull: false //NULL 값 허용 여부
         },
         contents: {
             type: DataTypes.TEXT,
                 allowNull: false
+        },
+        allowBoardNum: {
+            type: DataTypes.INTEGER
         }
         },{
         // 테이블에 대한 설정 지정// static init의 매개변수와 연결되는 옵션, model/index.js에서 연결
