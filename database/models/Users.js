@@ -38,6 +38,11 @@ module.exports = (sequelize, DataTypes) => {
         charset: 'utf8',
         collate: 'utf8_general_ci',
     });
+    Users.associate = function(models) {
+        models.Users.hasMany(models.Board, {
+            foreignKey: 'code',
+        });
+    };
 
     return Users;
 };

@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
             charset: 'utf8',
             collate: 'utf8_general_ci',
     });
-
+    Board.associate = function (model){
+        model.Board.belongsTo(model.Users, {
+            foreignKey: 'Usercode',
+        });
+    }
     return Board;
 }
