@@ -48,14 +48,17 @@ router.use('/', isNotLoggedIn,async (req, res, next) => {
             clientSecret: BSM_OAUTH_CLIENT_SECRET,
             token
         });
+        console.log(ResourceRequest);
     } catch (error) {
-        return res.status(404).send('User not found');
+        console.log(error)
+        return res.status(404).send('User not found1');
     }
     const userInfo = ResourceRequest.data.user;
-    if (userInfo === undefined) {
-        return res.status(404).send('User not found');
-    }
     console.log(userInfo);
+    if (userInfo === undefined) {
+        return res.status(404).send('User not found2');
+    }
+
     try {
         let users = await models.Users.findOne({
             where: {code: userInfo.code}

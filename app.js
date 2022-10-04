@@ -47,7 +47,9 @@ let test = models.Users.findAll().then((result) => {
 app.use('/token', tokenRouter);
 app.use('/oauth', oauth);
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send(`Hello World!
+        <a href="https://bssm.kro.kr/oauth/login?clientId=75711f76&redirectURI=http://localhost:3000/oauth">로그인</a>
+    `)
 })
 
 
