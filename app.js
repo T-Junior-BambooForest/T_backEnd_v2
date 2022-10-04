@@ -5,6 +5,7 @@ const oauth = require('./routes/oauth');
 const app = express()
 const tokenRouter = require('./routes/Token');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 const session = require('express-session');
 require("dotenv").config();
 app.use(express.json())
@@ -46,10 +47,9 @@ let test = models.Users.findAll().then((result) => {
 
 app.use('/token', tokenRouter);
 app.use('/oauth', oauth);
-app.get('/', (req, res) => {
-    res.send(`Hello World!
-        <a href="https://bssm.kro.kr/oauth/login?clientId=75711f76&redirectURI=http://localhost:3000/oauth">로그인</a>
-    `)
+app.use(express.static(path.join('/home/ubuntu/T_Frontend/build')));
+app.use("/",function (req, res) {
+    res.sendFile(path.join("/home/ubuntu/T_Frontend/build", "index.html"));
 })
 
 
