@@ -38,9 +38,7 @@ models.sequelize.sync({ force: false })
         console.error(err);
     });
 
-let test = models.Users.findAll().then((result) => {
-    console.log(result)
-})
+
 
 
 
