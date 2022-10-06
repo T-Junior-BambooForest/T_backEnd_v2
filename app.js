@@ -43,11 +43,11 @@ models.sequelize.sync({ force: false })
 app.use('/token', tokenRouter);
 app.use('/oauth', oauth);
 app.use('/islogin', islogin);
-app.use(express.static(path.join('C:/Users/KHH/Desktop/T/T_FrontEnd/build')));
+app.use(express.static(path.join('/home/ubuntu/T_Frontend/build')));
 //console.log(path.join("C:/Users/KHH/Desktop/T/T_FrontEnd/build", "index.html"))
 app.use("/",function (req, res) {
     console.log(req.user)
-    res.sendFile(path.join("C:/Users/KHH/Desktop/T/T_FrontEnd/build", "index.html"));
+    res.sendFile(path.join("/home/ubuntu/T_Frontend/build", "index.html"));
 })
 
 
