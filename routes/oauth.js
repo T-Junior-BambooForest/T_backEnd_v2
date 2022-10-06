@@ -15,8 +15,8 @@ const BSM_OAUTH_CLIENT_SECRET = process.env.CLIENT_SECRET || '8878e3b0874db365d1
 const GET_TOKEN_URL = 'https://bssm.kro.kr/api/oauth/token';
 const GET_RESOURCE_URL ='https://bssm.kro.kr/api/oauth/resource';
 
-console.log(`${BSM_OAUTH_CLIENT_ID} 1`)
-console.log(`${BSM_OAUTH_CLIENT_SECRET} 2`)
+//console.log(`${BSM_OAUTH_CLIENT_ID} 1`)
+//console.log(`${BSM_OAUTH_CLIENT_SECRET} 2`)
 
 router.use('/', isNotLoggedIn,async (req, res, next) => {
     const authcode = req.query.code;
@@ -32,12 +32,12 @@ router.use('/', isNotLoggedIn,async (req, res, next) => {
             authcode
         });
     } catch (error) {
-        console.log(1)
+        //console.log(1)
        return  res.status(400).send('Authcode is invaild');
     }
     const token = TokenRequest.data.token;
     if (token === undefined) {
-        console.log(2)
+        //console.log(2)
         return res.status(400).send('Authcode is invaild');
     }
 
@@ -48,24 +48,25 @@ router.use('/', isNotLoggedIn,async (req, res, next) => {
             clientSecret: BSM_OAUTH_CLIENT_SECRET,
             token
         });
-        console.log(ResourceRequest);
+        //console.log(ResourceRequest);
     } catch (error) {
-        console.log(error)
+        console.error(error)
         return res.status(404).send('User not found1');
     }
     const userInfo = ResourceRequest.data.user;
-    console.log(userInfo);
+    //console.log(userInfo);
     if (userInfo === undefined) {
         return res.status(404).send('User not found2');
     }
 
     try {
         let users = await models.Users.findOne({
-            where: {code: userInfo.code}
+            where: {code: userInfo.code},
+            raw: true
         })
 
         if(users){
-            console.log(users)
+            //console.log(users)
             passport.authenticate('local', (authError, user, info) => {
                 if (authError) {
                     console.error(authError);
@@ -90,7 +91,7 @@ router.use('/', isNotLoggedIn,async (req, res, next) => {
             let Class = userInfo.classNo;
             let studentNo = userInfo.studentNo;
             let name = userInfo.name;
-            console.log(code,nickname,enrolled,grade,Class,studentNo,name);
+            //console.log(code,nickname,enrolled,grade,Class,studentNo,name);
             await models.Users.create({
                 "code": code,
                 "nickname": nickname,

@@ -1,6 +1,7 @@
 const passport = require('passport');
 const local = require('./localStrategy'); // 로컬서버로 로그인할때
 const models = require('../database/models/');
+const {raw} = require("express");
 
 
 module.exports = () => {
@@ -13,7 +14,7 @@ module.exports = () => {
     //? 즉 로그인 과정을 할때만 실행
     passport.serializeUser((user, done) => {
         // req.login(user, ...)의 user가 일로 와서 값을 이용할수 있는 것이다.
-        console.log(user)
+        //console.log(user)
         done(null, user.code);
         // req.session객체에 어떤 데이터를 저장할 지 선택.
         // user.id만을 세션객체에 넣음. 사용자의 온갖 정보를 모두 들고있으면,
@@ -26,7 +27,10 @@ module.exports = () => {
     passport.deserializeUser((code, done) => {
         // req.session에 저장된 사용자 아이디를 바탕으로 DB 조회로 사용자 정보를 얻어낸 후 req.user에 저장.
         // 즉, id를 sql로 조회해서 전체 정보를 가져오는 복구 로직이다.
-        models.Users.findOne({ where: { code:code } })
+        models.Users.findOne({
+            where: { code:code },
+            raw: true
+        }).then(user => done(null, user))
             .then(user => done(null, user)) //? done()이 되면 이제 다시 req.login(user, ...) 쪽으로 되돌아가 다음 미들웨어를 실행하게 된다.
             .catch(err => done(err));
     });
@@ -36,6 +40,6 @@ module.exports = () => {
     //^ 이를 deserialize 복구해서 사용하는 식으로 하기 위해서다.
 
     /* ---------------------------------------------------------------------- */
-
+    console.log("Z");
     local();
 };

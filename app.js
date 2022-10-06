@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const models = require('./database/models');
 const oauth = require('./routes/oauth');
+const islogin = require('./routes/whoareyou');
 const app = express()
 const tokenRouter = require('./routes/Token');
 const cookieParser = require('cookie-parser');
@@ -39,18 +40,23 @@ models.sequelize.sync({ force: false })
     });
 
 
-
-
-
-
 app.use('/token', tokenRouter);
 app.use('/oauth', oauth);
-app.use(express.static(path.join('/home/ubuntu/T_Frontend/build')));
+app.use('/islogin', islogin);
+app.use(express.static(path.join('C:/Users/KHH/Desktop/T/T_FrontEnd/build')));
+//console.log(path.join("C:/Users/KHH/Desktop/T/T_FrontEnd/build", "index.html"))
 app.use("/",function (req, res) {
-    res.sendFile(path.join("/home/ubuntu/T_Frontend/build", "index.html"));
+    console.log(req.user)
+    res.sendFile(path.join("C:/Users/KHH/Desktop/T/T_FrontEnd/build", "index.html"));
 })
 
 
+app.use(function(err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+});
 
 app.listen(process.env.PORT || 5000 ,() => {
     console.log("Sever On");
