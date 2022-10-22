@@ -11,7 +11,7 @@ const e = require("express");
 
 router.use('/', isLoggedIn,async (req, res, next) => {
     let user = req.user;
-    console.log(user);
+   // console.log(user);
     if(user === undefined){
         res.status(500).send('User not found');
     }

@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
                 allowNull: false
         },
-        allowBoardNum: {
-            type: DataTypes.INTEGER
+        allowBoard: {
+            type: DataTypes.BOOLEAN
         }
         },{
         // 테이블에 대한 설정 지정// static init의 매개변수와 연결되는 옵션, model/index.js에서 연결

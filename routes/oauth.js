@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-require("dotenv").config({path: __dirname + '/.env'});
 const models = require('../database/models');
 const { isLoggedIn, isNotLoggedIn } = require('./isLogined');
 const passport = require('passport');
 const passportConfig = require('../passport');
-const e = require("express");
+
+require("dotenv").config();
 
 
-
+let userInfo;
 const BSM_OAUTH_CLIENT_ID = process.env.CLIENT_ID || '75711f76';
 const BSM_OAUTH_CLIENT_SECRET = process.env.CLIENT_SECRET || '8878e3b0874db365d1a9c073d4e307d7';
 const GET_TOKEN_URL = 'https://bssm.kro.kr/api/oauth/token';
@@ -23,7 +23,7 @@ router.use('/', isNotLoggedIn,async (req, res, next) => {
     if (authcode === undefined) {
         return res.status(400).send('Authcode is required');
     }
-
+    console.log(authcode);
     let TokenRequest;
     try {
         TokenRequest = await axios.post(GET_TOKEN_URL, {
@@ -33,12 +33,13 @@ router.use('/', isNotLoggedIn,async (req, res, next) => {
         });
     } catch (error) {
         //console.log(1)
-       return  res.status(400).send('Authcode is invaild');
+       return  res.status(400).send('Authcode is invaild ');
     }
     const token = TokenRequest.data.token;
+    //console.log(token)
     if (token === undefined) {
         //console.log(2)
-        return res.status(400).send('Authcode is invaild');
+        return res.status(400).send('Authcode is invaild ');
     }
 
     let ResourceRequest;
@@ -53,7 +54,7 @@ router.use('/', isNotLoggedIn,async (req, res, next) => {
         console.error(error)
         return res.status(404).send('User not found1');
     }
-    const userInfo = ResourceRequest.data.user;
+     userInfo = ResourceRequest.data.user;
     //console.log(userInfo);
     if (userInfo === undefined) {
         return res.status(404).send('User not found2');
