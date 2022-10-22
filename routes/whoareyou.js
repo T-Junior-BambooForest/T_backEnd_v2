@@ -6,7 +6,6 @@ const models = require('../database/models');
 const { isLoggedIn, isNotLoggedIn } = require('./isLogined');
 const passport = require('passport');
 const passportConfig = require('../passport');
-const e = require("express");
 
 
 router.use('/', isLoggedIn,async (req, res, next) => {
@@ -17,7 +16,6 @@ router.use('/', isLoggedIn,async (req, res, next) => {
     }
     res.send(user);
 
-    //회원가입
 });
 
 
