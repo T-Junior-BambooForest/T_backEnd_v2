@@ -42,11 +42,12 @@
 ## POST
 > ### /board 
 > : Write board with request body `title, content, user` with Json
+> return `true` or `false`    
+>  ### /board/update
+> : update board with request body `boardCode, allow:Bool` with Json
+> return `true` or `false`
 
 ## DELETE
 > ### /board
 > : delete board with request body `boardCode` with Json
-
-## UPDATE
-> ### /board
-> : update board with request body `boardCode, allow:Bool` with Json 
+> return `true` or `false`   
