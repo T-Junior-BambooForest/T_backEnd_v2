@@ -49,4 +49,4 @@
 
 ## UPDATE
 > ### /board
-> : update board with request body `boardCode, allow:Bool` with Json
+> : update board with request body `boardCode, allow:Bool` with Json 
