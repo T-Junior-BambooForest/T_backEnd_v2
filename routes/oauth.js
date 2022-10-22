@@ -12,28 +12,28 @@ require("dotenv").config();
 let userInfo;
 const BSM_OAUTH_CLIENT_ID = process.env.CLIENT_ID || '75711f76';
 const BSM_OAUTH_CLIENT_SECRET = process.env.CLIENT_SECRET || '8878e3b0874db365d1a9c073d4e307d7';
-const GET_TOKEN_URL = 'https://bssm.kro.kr/api/oauth/token';
-const GET_RESOURCE_URL ='https://bssm.kro.kr/api/oauth/resource';
+const GET_TOKEN_URL = 'https://auth.bssm.kro.kr/api/oauth/token';
+const GET_RESOURCE_URL ='https://auth.bssm.kro.kr/api/oauth/resource';
 
-//console.log(`${BSM_OAUTH_CLIENT_ID} 1`)
+console.log(`${BSM_OAUTH_CLIENT_ID} 1`)
 //console.log(`${BSM_OAUTH_CLIENT_SECRET} 2`)
 
 router.use('/', isNotLoggedIn,async (req, res, next) => {
-    const authcode = req.query.code;
-    if (authcode === undefined) {
+    const authCode = req.query.code;
+    if (authCode === undefined) {
         return res.status(400).send('Authcode is required');
     }
-    console.log(authcode);
+    console.log(authCode);
     let TokenRequest;
     try {
         TokenRequest = await axios.post(GET_TOKEN_URL, {
             clientId: BSM_OAUTH_CLIENT_ID,
             clientSecret: BSM_OAUTH_CLIENT_SECRET,
-            authcode
+            authCode
         });
     } catch (error) {
-        //console.log(1)
-       return  res.status(400).send('Authcode is invaild ');
+        console.log(error)
+       return  res.status(400).send('Authcode is invaild 1');
     }
     const token = TokenRequest.data.token;
     //console.log(token)
@@ -85,9 +85,10 @@ router.use('/', isNotLoggedIn,async (req, res, next) => {
                 });
             })(req, res, next); //! 미들웨어 내의 미들웨어에는 콜백을 실행시키기위해 (req, res, next)를 붙인다.
         } else {
+            console.log(userInfo)
             let code = userInfo.code;
             let nickname = userInfo.nickname;
-            let enrolled = userInfo.enrolled;
+            let enrolled = userInfo.enrolledAt;
             let grade = userInfo.grade;
             let Class = userInfo.classNo;
             let studentNo = userInfo.studentNo;
@@ -102,9 +103,10 @@ router.use('/', isNotLoggedIn,async (req, res, next) => {
                 "studentNo": studentNo,
                 "name": name
             })
+            res.redirect('/');
         }
     } catch (error){
-        console.error(error);
+        //console.error(error);
         return res.status(500).send('Server Error');
         }
 
