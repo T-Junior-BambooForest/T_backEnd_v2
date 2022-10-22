@@ -10,30 +10,30 @@
 > > response : 
 ```json 
 [{
-    boardCode: 1,
-    title: "TEST",
-    content: "TEST asdfas asdf adsfa",
-    User: {
-        id: 1,
-        name: "bsmboo",
+    "boardCode": 1,
+    "title": "TEST",
+    "content": "TEST asdfas asdf adsfa",
+    "User": {
+        "id": 1,
+        "name": "bsmboo"
     }   
 },
 {
-    boardCode: 2,
-    title: "TE2ST",
-    content: "TE2ST asd2fas as2df adsfa",
-    User: {
-        id: 2,
-        name: "bsmasdfboo",
+    "boardCode": 2,
+    "title": "TE2ST",
+    "content": "TE2ST asd2fas as2df adsfa",
+    "User": {
+        "id": 2,
+        "name": "bsmasdfboo"
     }   
 },
 {
-    boardCode: 5,
-    title: "TEddST",
-    content: "TEST asdfas asdf adsfa",
-    User: {
-        id: 1,
-        name: "dffda",
+    "boardCode": 5,
+    "title": "TEddST",
+    "content": "TEST asdfas asdf adsfa",
+    "User": {
+        "id": 1,
+        "name": "dffda"
     }   
 }]
 ```
@@ -46,3 +46,7 @@
 ## DELETE
 > ### /board
 > : delete board with request body `boardCode` with Json
+
+## UPDATE
+> ### /board
+> : update board with request body `boardCode, allow:Bool` with Json
