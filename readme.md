@@ -16,7 +16,7 @@
     "User": {
         "id": 1,
         "name": "bsmboo"
-    }   
+    }
 },
 {
     "boardCode": 2,
