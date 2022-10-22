@@ -30,8 +30,7 @@ module.exports = () => {
         models.Users.findOne({
             where: { code:code },
             raw: true
-        }).then(user => done(null, user))
-            .then(user => done(null, user)) //? done()이 되면 이제 다시 req.login(user, ...) 쪽으로 되돌아가 다음 미들웨어를 실행하게 된다.
+        }).then(user => done(null, user))//? done()이 되면 이제 다시 req.login(user, ...) 쪽으로 되돌아가 다음 미들웨어를 실행하게 된다.
             .catch(err => done(err));
     });
 
