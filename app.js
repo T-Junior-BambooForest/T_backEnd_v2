@@ -13,7 +13,14 @@ require("dotenv").config();
 const app = express()
 app.use(express.json())
 console.log(process.env.JWT_SECRET)
+const cors = require('cors');
 
+
+let corsOptions = {
+    origin: "*",
+    credential: true,
+};
+app.use(cors(corsOptions));
 passportConfig()
 
 app.use(cookieParser(process.env.COOKIE_SECRET));
