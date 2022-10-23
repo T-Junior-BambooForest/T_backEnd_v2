@@ -15,7 +15,7 @@ const BSM_OAUTH_CLIENT_SECRET = process.env.CLIENT_SECRET || '8878e3b0874db365d1
 const GET_TOKEN_URL = 'https://auth.bssm.kro.kr/api/oauth/token';
 const GET_RESOURCE_URL ='https://auth.bssm.kro.kr/api/oauth/resource';
 
-console.log(`${BSM_OAUTH_CLIENT_ID} 1`)
+//console.log(`${BSM_OAUTH_CLIENT_ID} 1`)
 //console.log(`${BSM_OAUTH_CLIENT_SECRET} 2`)
 
 router.use('/', isNotLoggedIn,async (req, res, next) => {
@@ -81,7 +81,7 @@ router.use('/', isNotLoggedIn,async (req, res, next) => {
                         return res.send('err2');
                     }
                     // done(null, user)로 로직이 성공적이라면, 세션에 사용자 정보를 저장해놔서 로그인 상태가 된다.
-                    return res.location('back');
+                    return res.send('back');
                 });
             })(req, res, next); //! 미들웨어 내의 미들웨어에는 콜백을 실행시키기위해 (req, res, next)를 붙인다.
         } else {
@@ -103,7 +103,7 @@ router.use('/', isNotLoggedIn,async (req, res, next) => {
                 "studentNo": studentNo,
                 "name": name
             })
-            res.location('back');
+            res.send('back');
         }
     } catch (error){
         //console.error(error);
