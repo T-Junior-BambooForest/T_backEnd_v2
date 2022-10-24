@@ -81,7 +81,7 @@ router.use('/', isNotLoggedIn,async (req, res, next) => {
                         return res.send('err2');
                     }
                     // done(null, user)로 로직이 성공적이라면, 세션에 사용자 정보를 저장해놔서 로그인 상태가 된다.
-                    return res.send('back');
+                    return res.redirect('/');
                 });
             })(req, res, next); //! 미들웨어 내의 미들웨어에는 콜백을 실행시키기위해 (req, res, next)를 붙인다.
         } else {
@@ -103,7 +103,7 @@ router.use('/', isNotLoggedIn,async (req, res, next) => {
                 "studentNo": studentNo,
                 "name": name
             })
-            res.send('back');
+            res.redirect('/');
         }
     } catch (error){
         //console.error(error);
