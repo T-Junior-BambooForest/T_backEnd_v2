@@ -9,6 +9,7 @@ const passportConfig = require('../passport');
 
 
 router.use('/', isLoggedIn,async (req, res, next) => {
+    console.log(req)
     let user = req.user;
    // console.log(user);
     if(user === undefined){

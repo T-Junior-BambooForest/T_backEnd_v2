@@ -63,7 +63,7 @@ router.use('/', isNotLoggedIn,async (req, res, next) => {
              where: {code: code || userInfo.code},
              raw: true
          })
-         if (users) {
+         if (users != null) {
              login(users)
          } else {
              register(userInfo)
@@ -76,16 +76,12 @@ router.use('/', isNotLoggedIn,async (req, res, next) => {
                 console.error(authError);
                 return res.status(404).send('err'); // 에러처리 미들웨어로 보낸다.
             }
-            return req.login(users, loginError => {
+            return req.login(users, (loginError) => {
                 //? loginError => 미들웨어는 passport/index.js의 passport.deserializeUser((id, done) => 가 done()이 되면 실행하게 된다.
-                // 만일 done(err) 가 됬다면,
                 if (loginError) {
                     console.error(loginError);
                     return res.send('err2');
                 }
-                // done(null, user)로 로직이 성공적이라면, 세션에 사용자 정보를 저장해놔서 로그인 상태가 된다.
-                //res.cookie('connect.sid', req.sessionID)
-                //res.redirect('http://bsmboo.kro.kr');
                 console.log('로그인 성공');
                 return res.redirect('http://bsmboo.kro.kr');
             });

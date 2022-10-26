@@ -1,4 +1,5 @@
 exports.isLoggedIn = (req, res, next) => {
+    console.log(req.user)
     // isAuthenticated()로 검사해 로그인이 되어있으면
     if (req.isAuthenticated()) {
         next(); // 다음 미들웨어
