@@ -12,7 +12,7 @@ const board = require('./routes/post');
 require("dotenv").config();
 const app = express()
 app.use(express.json())
-console.log(process.env.JWT_SECRET)
+
 const cors = require('cors');
 
 
@@ -41,7 +41,7 @@ app.use(passport.session());
 
 models.sequelize.sync({ force: false })
     .then(() => {
-        console.log('데이터베이스 연결 성공');
+        //console.log('데이터베이스 연결 성공');
     })
     .catch((err) => {
         console.error(err);
@@ -57,7 +57,7 @@ app.use('/board', board);
 app.use("/",function (req, res) {
     //console.log(req)
     //res.end()
-    res.redirect("http://bsmboo.kro.kr")
+    res.redirect("/")
     //console.log(req.user)
    // res.sendFile(path.join("C:/Users/KHH/Desktop/T/T_FrontEnd/build", "index.html"));
 })
@@ -68,6 +68,6 @@ app.use(function(req, res, next) {
    return res.status(404).send('Sorry cant find that!');
 });
 
-app.listen(process.env.PORT || 5000 ,() => {
+app.listen(process.env.PORT || 8000 ,() => {
     console.log("Sever On");
 })

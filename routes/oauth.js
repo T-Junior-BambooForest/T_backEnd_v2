@@ -5,112 +5,112 @@ const models = require('../database/models');
 const { isLoggedIn, isNotLoggedIn } = require('./isLogined');
 const passport = require('passport');
 const passportConfig = require('../passport');
-
+const { BsmOauth, BsmOauthError, BsmOauthErrorType, BsmOauthUserRole, StudentResource, TeacherResource } = require('bsm-oauth');
 require("dotenv").config();
 
 
-let userInfo;
-const BSM_OAUTH_CLIENT_ID = process.env.CLIENT_ID || '75711f76';
-const BSM_OAUTH_CLIENT_SECRET = process.env.CLIENT_SECRET || '8878e3b0874db365d1a9c073d4e307d7';
-const GET_TOKEN_URL = 'https://auth.bssm.kro.kr/api/oauth/token';
-const GET_RESOURCE_URL ='https://auth.bssm.kro.kr/api/oauth/resource';
 
-//console.log(`${BSM_OAUTH_CLIENT_ID} 1`)
-//console.log(`${BSM_OAUTH_CLIENT_SECRET} 2`)
+
+let userInfo;
+const BSM_AUTH_CLIENT_ID = process.env.CLIENT_ID ;
+const BSM_AUTH_CLIENT_SECRET = process.env.CLIENT_SECRET ;
+const bsmOauth = new BsmOauth(BSM_AUTH_CLIENT_ID, BSM_AUTH_CLIENT_SECRET);
+
 
 router.use('/', isNotLoggedIn,async (req, res, next) => {
-    const authCode = req.query.code;
-    if (authCode === undefined) {
-        return res.status(400).send('Authcode is required');
-    }
-    console.log(authCode);
-    let TokenRequest;
-    try {
-        TokenRequest = await axios.post(GET_TOKEN_URL, {
-            clientId: BSM_OAUTH_CLIENT_ID,
-            clientSecret: BSM_OAUTH_CLIENT_SECRET,
-            authCode
-        });
-    } catch (error) {
-        console.log(error)
-       return  res.status(400).send('Authcode is invaild 1');
-    }
-    const token = TokenRequest.data.token;
-    //console.log(token)
-    if (token === undefined) {
-        //console.log(2)
-        return res.status(400).send('Authcode is invaild ');
-    }
+    let resource
+    await (async () => {
+        try {
+            const authCode = req.query.code;
+            const token = await bsmOauth.getToken(authCode);
+            resource = await bsmOauth.getResource(token);
+        } catch (error) {
+            if (error instanceof BsmOauthError) {
+                switch (error.type) {
+                    case BsmOauthErrorType.INVALID_CLIENT: {
+                       console.log('클라이언트 정보가 올바르지 않습니다.');
+                        break;
+                    }
+                    case BsmOauthErrorType.AUTH_CODE_NOT_FOUND: {
+                        console.log('인증코드를 찾을 수 없습니다.');
+                        break;
+                    }
+                    case BsmOauthErrorType.TOKEN_NOT_FOUND: {
+                        console.log('토큰을 찾을 수 없습니다.');
+                        break;
+                    }
+                    default: {
+                        console.log('알 수 없는 오류가 발생했습니다.');
+                    }
+                }
+            }else{
+                console.log('알 수 없는 오류가 발생했습니다2.');
+                console.log(error);
+            }
+        }
+    })().then(() => {
+        finduser(resource);
+    });
 
-    let ResourceRequest;
-    try {
-        ResourceRequest = await axios.post(GET_RESOURCE_URL, {
-            clientId: BSM_OAUTH_CLIENT_ID,
-            clientSecret: BSM_OAUTH_CLIENT_SECRET,
-            token
-        });
-        //console.log(ResourceRequest);
-    } catch (error) {
-        console.error(error)
-        return res.status(404).send('User not found1');
-    }
-     userInfo = ResourceRequest.data.user;
-    //console.log(userInfo);
-    if (userInfo === undefined) {
-        return res.status(404).send('User not found2');
-    }
 
-    try {
+    async function finduser(userInfo) {
         let users = await models.Users.findOne({
-            where: {code: userInfo.code},
+            where: {code: userInfo.userCode || userInfo.code},
             raw: true
         })
+        if (users) {
+            login(users)
+        }
+        else {
+            register(userInfo)
+        }
+    }
 
-        if(users){
-            //console.log(users)
-            passport.authenticate('local', (authError, user, info) => {
-                if (authError) {
-                    console.error(authError);
-                    return res.status(404).send('err'); // 에러처리 미들웨어로 보낸다.
+    function login(users){
+        passport.authenticate('local', (authError, user, info) => {
+            if (authError) {
+                console.error(authError);
+                return res.status(404).send('err'); // 에러처리 미들웨어로 보낸다.
+            }
+            return req.login(users, loginError => {
+                //? loginError => 미들웨어는 passport/index.js의 passport.deserializeUser((id, done) => 가 done()이 되면 실행하게 된다.
+                // 만일 done(err) 가 됬다면,
+                if (loginError) {
+                    console.error(loginError);
+                    return res.send('err2');
                 }
-                return req.login(users, loginError => {
-                    //? loginError => 미들웨어는 passport/index.js의 passport.deserializeUser((id, done) => 가 done()이 되면 실행하게 된다.
-                    // 만일 done(err) 가 됬다면,
-                    if (loginError) {
-                        console.error(loginError);
-                        return res.send('err2');
-                    }
-                    // done(null, user)로 로직이 성공적이라면, 세션에 사용자 정보를 저장해놔서 로그인 상태가 된다.
-                    return res.redirect('/');
-                });
-            })(req, res, next); //! 미들웨어 내의 미들웨어에는 콜백을 실행시키기위해 (req, res, next)를 붙인다.
-        } else {
-            console.log(userInfo)
-            let code = userInfo.code;
-            let nickname = userInfo.nickname;
-            let enrolled = userInfo.enrolledAt;
-            let grade = userInfo.grade;
-            let Class = userInfo.classNo;
-            let studentNo = userInfo.studentNo;
-            let name = userInfo.name;
-            //console.log(code,nickname,enrolled,grade,Class,studentNo,name);
-            await models.Users.create({
-                "code": code,
-                "nickname": nickname,
-                "enrolled": enrolled,
-                "grade": grade,
-                "class": Class ,
-                "studentNo": studentNo,
-                "name": name
-            })
-            res.redirect('/');
-        }
-    } catch (error){
-        //console.error(error);
-        return res.status(500).send('Server Error');
-        }
+                // done(null, user)로 로직이 성공적이라면, 세션에 사용자 정보를 저장해놔서 로그인 상태가 된다.
+                //res.cookie('connect.sid', req.sessionID)
+                //res.redirect('http://bsmboo.kro.kr');
+                console.log('로그인 성공');
+                return res.redirect('/');
+            });
+        })(req, res, next); //! 미들웨어 내의 미들웨어에는 콜백을 실행시키기위해 (req, res, next)를 붙인다.
+    }
 
-            //회원가입
+   async function register(userInfo) {
+        let code = userInfo.userCode;
+        let nickname = userInfo.nickname;
+        let enrolled = userInfo.student.enrolledAt;
+        let grade = userInfo.student.grade;
+        let Class = userInfo.student.classNo;
+        let studentNo = userInfo.student.studentNo;
+        let name = userInfo.student.name;
+
+        await models.Users.create({
+            "code": code,
+            "nickname": nickname,
+            "enrolled": enrolled,
+            "grade": grade,
+            "class": Class ,
+            "studentNo": studentNo,
+            "name": name
+        }).then(() =>{
+            console.log('회원가입 성공');
+            finduser(userInfo)
+       })
+    }
+
 });
 
 

@@ -11,7 +11,7 @@ module.exports = () => {
         new LocalStrategy(
             {
                 //* req.body 객체인자 하고 키값이 일치해야 한다.
-                usernameField: 'code', // req.body.email
+               usernameField: 'code', // req.body.email
                 passwordField: 'nickname', // req.body.password
 
                 session: true, // 세션에 저장 여부
