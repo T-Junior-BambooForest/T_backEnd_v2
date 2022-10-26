@@ -47,24 +47,28 @@ router.use('/', isNotLoggedIn,async (req, res, next) => {
                 console.log('알 수 없는 오류가 발생했습니다2.');
                 console.log(error);
             }
+
         }
     })().then(() => {
+        console.log(resource.userCode);
         finduser(resource);
     });
 
 
-    async function finduser(userInfo) {
-        let users = await models.Users.findOne({
-            where: {code: userInfo.userCode || userInfo.code},
-            raw: true
-        })
-        if (users) {
-            login(users)
-        }
-        else {
-            register(userInfo)
-        }
-    }
+     async function finduser(userInfo) {
+         let code = userInfo.userCode;
+         console.log(code);
+         console.log(userInfo);
+         let users = await models.Users.findOne({
+             where: {code: code || userInfo.code},
+             raw: true
+         })
+         if (users) {
+             login(users)
+         } else {
+             register(userInfo)
+         }
+     }
 
     function login(users){
         passport.authenticate('local', (authError, user, info) => {
@@ -83,7 +87,7 @@ router.use('/', isNotLoggedIn,async (req, res, next) => {
                 //res.cookie('connect.sid', req.sessionID)
                 //res.redirect('http://bsmboo.kro.kr');
                 console.log('로그인 성공');
-                return res.redirect('/');
+                return res.redirect('http://bsmboo.kro.kr');
             });
         })(req, res, next); //! 미들웨어 내의 미들웨어에는 콜백을 실행시키기위해 (req, res, next)를 붙인다.
     }
