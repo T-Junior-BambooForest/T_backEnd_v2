@@ -22,7 +22,7 @@ router.get('/',async (req, res, next) => {
     })
 })
 
-router.post('/',isLoggedIn,async (req, res, next) => {
+router.post('/',async (req, res, next) => {
     //console.log(req);
     models.Board.create({
         title : req.body.title,
@@ -38,7 +38,7 @@ router.post('/',isLoggedIn,async (req, res, next) => {
     })
 })
 
-router.delete('/',isLoggedIn,async (req, res, next) => {
+router.delete('/',async (req, res, next) => {
     models.Board.destroy({
         where: {boardCode: req.body.boardCode}
     }).then(() => {
@@ -49,7 +49,7 @@ router.delete('/',isLoggedIn,async (req, res, next) => {
     })
 })
 
-router.post('/update',isLoggedIn,async (req, res, next) => {
+router.post('/update',async (req, res, next) => {
     models.Board.update({
         allowBoard : req.body.allowBoard,
     },{
@@ -62,7 +62,7 @@ router.post('/update',isLoggedIn,async (req, res, next) => {
     })
 })
 
-router.get('/manage',isManager,async (req, res, next) => {
+router.get('/manage',async (req, res, next) => {
     models.Board.findAll({
         include: [
             {
