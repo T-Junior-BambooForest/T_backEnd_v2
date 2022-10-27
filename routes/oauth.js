@@ -5,9 +5,11 @@ const models = require('../database/models');
 const { isLoggedIn, isNotLoggedIn } = require('./isLogined');
 const passport = require('passport');
 const passportConfig = require('../passport');
+const jwt = require('jsonwebtoken');
 const { BsmOauth, BsmOauthError, BsmOauthErrorType, BsmOauthUserRole, StudentResource, TeacherResource } = require('bsm-oauth');
 require("dotenv").config();
 
+const jwtSecret = process.env.JWT_SECRET;
 
 
 
@@ -17,7 +19,7 @@ const BSM_AUTH_CLIENT_SECRET = process.env.CLIENT_SECRET ;
 const bsmOauth = new BsmOauth(BSM_AUTH_CLIENT_ID, BSM_AUTH_CLIENT_SECRET);
 
 
-router.use('/', isNotLoggedIn,async (req, res, next) => {
+router.use('/', async (req, res) => {
     let resource
     await (async () => {
         try {
@@ -64,29 +66,26 @@ router.use('/', isNotLoggedIn,async (req, res, next) => {
              raw: true
          })
          if (users != null) {
-             login(users)
+             login(req,res,users)
          } else {
              register(userInfo)
          }
      }
 
-    function login(users){
-        passport.authenticate('local', (authError, user, info) => {
-            if (authError) {
-                console.error(authError);
-                return res.status(404).send('err'); // 에러처리 미들웨어로 보낸다.
-            }
-            return req.login(users, (loginError) => {
-                //? loginError => 미들웨어는 passport/index.js의 passport.deserializeUser((id, done) => 가 done()이 되면 실행하게 된다.
-                if (loginError) {
-                    console.error(loginError);
-                    return res.send('err2');
-                }
-                console.log('로그인 성공');
-                return res.redirect('http://bsmboo.kro.kr');
-            });
-        })(req, res, next); //! 미들웨어 내의 미들웨어에는 콜백을 실행시키기위해 (req, res, next)를 붙인다.
-    }
+    function login(req,res,users){
+        const code = users.code;
+        const nickname = users.nickname;
+        let token = ""
+        token = jwt.sign({
+            code: code
+        }, jwtSecret, {
+            expiresIn: '15m',
+            issuer: 'bsmboo'
+        });
+        res.cookie('token', token)
+        return res.redirect('http://bsmboo.kro.kr')
+        }
+
 
    async function register(userInfo) {
         let code = userInfo.userCode;

@@ -5,7 +5,6 @@ const islogin = require('./routes/whoareyou');
 const boardRouter = require('./routes/post');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-const session = require('express-session');
 const passport = require('passport');
 const passportConfig = require('./passport');
 const board = require('./routes/post');
@@ -24,20 +23,6 @@ app.use(cors(corsOptions));
 passportConfig()
 
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(
-    session({
-        resave: false,
-        saveUninitialized: false,
-        secret: process.env.COOKIE_SECRET,
-        cookie: {
-            httpOnly: true,
-            secure: false,
-        },
-    }),
-);
-
-app.use(passport.initialize()); // 요청 객체에 passport 설정을 심음
-app.use(passport.session());
 
 models.sequelize.sync({ force: false })
     .then(() => {

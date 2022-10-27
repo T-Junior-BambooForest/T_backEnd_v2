@@ -1,23 +1,36 @@
-exports.isLoggedIn = (req, res, next) => {
-    console.log(req.user)
-    // isAuthenticated()로 검사해 로그인이 되어있으면
-    if (req.isAuthenticated()) {
-        next(); // 다음 미들웨어
-    } else {
-        res.status(401).send('로그인 필요');
-    }
-};
+const jwt = require('jsonwebtoken');
+require("dotenv").config();
+const SECRET_KEY = process.env.JWT_SECRET;
+const express = require('express');
+const router = express.Router();
+const cookieParser = require('cookie-parser');
+router.use(cookieParser())
+//console.log(SECRET_KEY)
 
-exports.isNotLoggedIn = (req, res, next) => {
-    if (!req.isAuthenticated()) {
-        next(); // 로그인 안되어있으면 다음 미들웨어
-    } else {
-        const message = encodeURIComponent('로그인한 상태입니다.');
-        res.redirect(`/?error=${message}`);
+exports.auth = (req, res, next) => {
+    // 인증 완료
+    try {
+        // 요청 헤더에 저장된 토큰(req.headers.authorization)과 비밀키를 사용하여 토큰을 req.decoded에 반환
+        console.log(req.cookies);
+        //req.decoded = jwt.verify(req.headers.authorization, SECRET_KEY);
+        req.decoded = jwt.verify(req.cookies.token, SECRET_KEY);
+        return next();
     }
-};
-
-exports.isManager = (req, res, next) => {
-    if(req.user === 66) next();
-    else res.status(401).send('권한이 없습니다.');
+        // 인증 실패
+    catch (error) {
+        // 유효시간이 초과된 경우
+        if (error.name === 'TokenExpiredError') {
+            return res.status(419).json({
+                code: 419,
+                message: '토큰이 만료되었습니다.'
+            });
+        }
+        // 토큰의 비밀키가 일치하지 않는 경우
+        if (error.name === 'JsonWebTokenError') {
+            return res.status(401).json({
+                code: 401,
+                message: '유효하지 않은 토큰입니다.'
+            });
+        }
+    }
 }
