@@ -15,11 +15,13 @@ app.use(express.json())
 const cors = require('cors');
 
 
-let corsOptions = {
-    origin: "*",
-    credential: true,
-};
-app.use(cors(corsOptions));
+
+app.use(
+    cors({
+        origin: true, // '*' 안됨 -> 정확한 주소 또는 origin: true로 해도 됨
+        credentials: true,
+    }),
+);
 passportConfig()
 
 app.use(cookieParser(process.env.COOKIE_SECRET));
