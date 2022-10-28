@@ -83,7 +83,7 @@ router.use('/', async (req, res) => {
             issuer: 'bsmboo'
         });
         res.cookie('token', token)
-        return res.redirect('http://bsmboo.kro.kr')
+        return res.redirect('/')
         }
 
 

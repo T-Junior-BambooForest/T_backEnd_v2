@@ -14,9 +14,9 @@ router.get('/', auth, (req, res) => {
         }
     }).then((result) => {
         return res.status(200).json({
-        code: 200,
-        message: '토큰은 정상입니다.',
-        data: result
+            code: 200,
+            message: '토큰은 정상입니다.',
+            data: result
      })
     }).catch((err) => {
         console.error(err);
