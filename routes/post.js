@@ -36,17 +36,24 @@ function change (data){
                 k.createdAt = j.createdAt;
                 k.updatedAt = j.updatedAt;
                 if(j.isAnonymous === true){
+                    k.isAnonymous = true;
                     k.Usercode = '익명';
                     k.User.code = -1;
                     k.User.name = '익명';
                     k.User.nickname = '익명';
+                }else {
+                    k.isAnonymous = false;
+                    k.Usercode = j.Usercode;
+                    k.User.code = j.User.code;
+                    k.User.name = j.User.name;
+                    k.User.nickname = j.User.nickname;
                 }
                 console.log(k);
                 result.push(k)
             }
         }
     }
-    return data;
+    return result;
 }
 router.post('/',async (req, res, next) => {
     //console.log(req);
