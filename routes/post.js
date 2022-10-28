@@ -30,7 +30,7 @@ function change (data){
             data[i].User.name = "익명";
             data[i].Usercode = -1;
             data[i].User.code = -1;
-            console.log(data.User.code);
+            console.log(data[i].User.code);
         }
     }
     return data;
