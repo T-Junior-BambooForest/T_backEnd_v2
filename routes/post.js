@@ -23,6 +23,7 @@ router.get('/',async (req, res, next) => {
     })
 })
 function change (data){
+    data = JSON.parse(data);
     data.map((i) => {
         if(i.isAnonymous == true){
             i.Usercode = -1;
