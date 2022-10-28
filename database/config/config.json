@@ -5,7 +5,11 @@
     "database": "T_ShapedPeopleDB",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "logging": false
+    "logging": false,
+    "timezone": "+09:00",
+    "dialectOptions": {
+      "timezone": "+09:00"
+    }
   },
   "test": {
     "username": "root",
@@ -13,7 +17,11 @@
     "database": "T_ShapedPeopleDB",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "logging": false
+    "logging": false,
+    "timezone": "+09:00",
+    "dialectOptions": {
+      "timezone": "+09:00"
+    }
   },
   "production": {
     "username": "root",
@@ -21,6 +29,10 @@
     "database": "T_ShapedPeopleDB",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "logging": false
+    "logging": false,
+    "timezone": "+09:00",
+    "dialectOptions": {
+      "timezone": "+09:00"
+    }
   }
 }
