@@ -23,37 +23,16 @@ router.get('/',async (req, res, next) => {
     })
 })
 function change (data){
-    let i;
-    let result = [];
-    for(i in data) {
-        if (data[i].isAnonymous === true) {
-            let j;
-            for(j in data[i]){
-                let k = {};
-                k.boardCode = j.boardCode;
-                k.contents = j.contents;
-                k.allowBoard = j.allowBoard;
-                k.createdAt = j.createdAt;
-                k.updatedAt = j.updatedAt;
-                if(j.isAnonymous === true){
-                    k.isAnonymous = true;
-                    k.Usercode = '익명';
-                    k.User.code = -1;
-                    k.User.name = '익명';
-                    k.User.nickname = '익명';
-                }else {
-                    k.isAnonymous = false;
-                    k.Usercode = j.Usercode;
-                    k.User.code = j.User.code;
-                    k.User.name = j.User.name;
-                    k.User.nickname = j.User.nickname;
-                }
-                console.log(k);
-                result.push(k)
-            }
+    data.map((i) => {
+        if(i.isAnonymous == true){
+            i.Usercode = -1;
+            i.User.code = -1;
+            i.User.name = '익명';
+            i.User.nickname = '익명';
         }
-    }
-    return result;
+    })
+
+    return data;
 }
 router.post('/',async (req, res, next) => {
     //console.log(req);
