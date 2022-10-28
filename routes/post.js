@@ -23,12 +23,15 @@ router.get('/',async (req, res, next) => {
     })
 })
 function change (data){
-    if(data.isAnonymous == true){
-        data.User.nickname = "익명";
-        data.User.name = "익명";
-        data.Usercode = -1;
-        data.User.code = -1;
-        console.log(data.User.code);
+    let i;
+    for(i in data) {
+        if (data[i].isAnonymous === true) {
+            data[i].User.nickname = "익명";
+            data[i].User.name = "익명";
+            data[i].Usercode = -1;
+            data[i].User.code = -1;
+            console.log(data.User.code);
+        }
     }
     return data;
 }
