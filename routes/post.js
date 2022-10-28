@@ -15,8 +15,7 @@ router.get('/',async (req, res, next) => {
         where : {allowBoard : true},
         order: [['boardCode', 'ASC']],
     }).then((result) => {
-        result = change(result);
-        res.send(result);
+        return senddata(req,res, change(result));
     }).catch((err) => {
         console.error(err);
         res.status(500).send('Server Error');
@@ -34,6 +33,11 @@ function change (data){
 
     return data;
 }
+
+function senddata (req,res,data){
+    res.send(data);
+}
+
 router.post('/',async (req, res, next) => {
     //console.log(req);
     models.Board.create({
