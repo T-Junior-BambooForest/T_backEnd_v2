@@ -15,21 +15,23 @@ router.get('/',async (req, res, next) => {
         where : {allowBoard : true},
         order: [['boardCode', 'ASC']],
     }).then((result) => {
-        for(let i in result){
-            if(result[i].isAnonymous == true){
-                result[i].User.nickname = "익명";
-                result[i].User.name = "익명";
-                result[i].Usercode = -1;
-                result[i].User.code = -1;
-            }
-        }
+        result = change(result);
         res.send(result);
     }).catch((err) => {
         console.error(err);
         res.status(500).send('Server Error');
     })
 })
-
+function change (data){
+    if(data.isAnonymous == true){
+        data.User.nickname = "익명";
+        data.User.name = "익명";
+        data.Usercode = -1;
+        data.User.code = -1;
+        console.log(data.User.code);
+    }
+    return data;
+}
 router.post('/',async (req, res, next) => {
     //console.log(req);
     models.Board.create({
