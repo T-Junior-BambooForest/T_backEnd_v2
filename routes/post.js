@@ -41,7 +41,8 @@ function change (data){
                     k.User.name = '익명';
                     k.User.nickname = '익명';
                 }
-                result.push(JSON.parse(k))
+                console.log(k);
+                result.push(k)
             }
         }
     }
