@@ -15,7 +15,7 @@ router.get('/',async (req, res, next) => {
         where : {allowBoard : true},
         order: [['boardCode', 'ASC']],
     }).then((result) => {
-        result = JSON.parse(result);
+        result = JSON.parse(JSON.stringify(result));
         return senddata(req,res, change(result));
     }).catch((err) => {
         console.error(err);
@@ -23,7 +23,7 @@ router.get('/',async (req, res, next) => {
     })
 })
 function change (data){
-    data = JSON.parse(data);
+    data = JSON.parse(JSON.stringify(data));
     data.map((i) => {
         if(i.isAnonymous == true){
             i.Usercode = -1;
