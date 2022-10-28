@@ -50,7 +50,7 @@ router.delete('/',async (req, res, next) => {
 
 router.post('/update',async (req, res, next) => {
     models.Board.update({
-        allowBoard : req.body.allowBoard,
+        allowBoard : true,
     },{
         where: {boardCode: req.body.boardCode}
     }).then(() => {
