@@ -15,6 +15,7 @@ router.get('/',async (req, res, next) => {
         where : {allowBoard : true},
         order: [['boardCode', 'ASC']],
     }).then((result) => {
+        result = JSON.parse(result);
         return senddata(req,res, change(result));
     }).catch((err) => {
         console.error(err);
