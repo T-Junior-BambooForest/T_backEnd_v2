@@ -5,10 +5,6 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        title: {
-            type: DataTypes.STRING(255), //자료형 타입
-                allowNull: false //NULL 값 허용 여부
-        },
         contents: {
             type: DataTypes.TEXT,
                 allowNull: false

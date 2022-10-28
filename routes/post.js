@@ -25,10 +25,8 @@ router.get('/',async (req, res, next) => {
 router.post('/',async (req, res, next) => {
     //console.log(req);
     models.Board.create({
-        title : req.body.title,
         contents : req.body.contents,
-        allowBoard : req.body.allowBoard,
-        Usercode: req.user.code,
+        Usercode: req.body.code,
         isAnonymous: req.body.isAnonymous
     }).then(() => {
         return  res.status(200).send('Success');

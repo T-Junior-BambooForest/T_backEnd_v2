@@ -79,7 +79,7 @@ router.use('/', async (req, res) => {
         token = jwt.sign({
             code: code
         }, jwtSecret, {
-            expiresIn: '15m',
+            expiresIn: '1h',
             issuer: 'bsmboo'
         });
         res.cookie('token', token)

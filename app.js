@@ -26,7 +26,7 @@ passportConfig()
 
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
-models.sequelize.sync({ force: false })
+models.sequelize.sync({ force: true })
     .then(() => {
         //console.log('데이터베이스 연결 성공');
     })
@@ -37,6 +37,7 @@ models.sequelize.sync({ force: false })
 
 app.use('/oauth', oauth);
 app.use('/islogin', islogin);
+app.use('/logout', logout);
 app.use('/board', board);
 //app.use(express.static(path.join("C:/Users/KHH/Desktop/T/T_FrontEnd/build")));
 //app.use(express.static(path.join('/home/ubuntu/T_Frontend/build')));
