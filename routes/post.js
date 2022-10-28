@@ -24,13 +24,25 @@ router.get('/',async (req, res, next) => {
 })
 function change (data){
     let i;
+    let result = [];
     for(i in data) {
         if (data[i].isAnonymous === true) {
-            data[i].User.nickname = "익명";
-            data[i].User.name = "익명";
-            data[i].Usercode = -1;
-            data[i].User.code = -1;
-            console.log(data[i].User.code);
+            let j;
+            for(j in data[i]){
+                let k = {};
+                k.boardCode = j.boardCode;
+                k.contents = j.contents;
+                k.allowBoard = j.allowBoard;
+                k.createdAt = j.createdAt;
+                k.updatedAt = j.updatedAt;
+                if(j.isAnonymous === true){
+                    k.Usercode = '익명';
+                    k.User.code = -1;
+                    k.User.name = '익명';
+                    k.User.nickname = '익명';
+                }
+                result.push(JSON.parse(k))
+            }
         }
     }
     return data;
