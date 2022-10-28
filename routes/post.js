@@ -15,6 +15,14 @@ router.get('/',async (req, res, next) => {
         where : {allowBoard : true},
         order: [['boardCode', 'ASC']],
     }).then((result) => {
+        for(let i in result){
+            if(result[i].isAnonymous == true){
+                result[i].User.nickname = "익명";
+                result[i].User.name = "익명";
+                result[i].Usercode = -1;
+                result[i].User.code = -1;
+            }
+        }
         res.send(result);
     }).catch((err) => {
         console.error(err);
