@@ -26,7 +26,8 @@ router.post('/',async (req, res, next) => {
     //console.log(req);
     models.Board.create({
         contents : req.body.contents,
-        Usercode: req.body.code,
+        allowBoard: false,
+        Usercode: req.body.Usercode,
         isAnonymous: req.body.isAnonymous
     }).then(() => {
         return  res.status(200).send('Success');
@@ -68,7 +69,6 @@ router.get('/manage',async (req, res, next) => {
                 attributes: ['code', 'name', 'nickname'],
             }
         ],
-        where : {allowBoard : false},
         order: [['boardCode', 'ASC']],
     }).then((result) => {
         res.send(result);
