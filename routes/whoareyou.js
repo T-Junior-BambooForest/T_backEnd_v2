@@ -13,6 +13,7 @@ router.get('/', auth, (req, res) => {
             code: code
         }
     }).then((result) => {
+        result.User.profile = "https://auth.bssm.kro.kr/_next/image?url=https%3A%2F%2Fauth.bssm.kro.kr%2Fresource%2Fuser%2Fprofile%2F"+result.Usercode+".png&w=256&q=75"
         return res.status(200).json({
             code: 200,
             message: '토큰은 정상입니다.',
