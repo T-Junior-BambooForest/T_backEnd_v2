@@ -4,7 +4,6 @@ const oauth = require('./routes/oauth');
 const islogin = require('./routes/whoareyou');
 const boardRouter = require('./routes/post');
 const cookieParser = require('cookie-parser');
-const { auth } = require('./isLogined');
 const path = require('path');
 const passport = require('passport');
 const passportConfig = require('./passport');
