@@ -4,6 +4,7 @@ const oauth = require('./routes/oauth');
 const islogin = require('./routes/whoareyou');
 const boardRouter = require('./routes/post');
 const cookieParser = require('cookie-parser');
+const { auth } = require('./isLogined');
 const path = require('path');
 const passport = require('passport');
 const passportConfig = require('./passport');
@@ -38,7 +39,7 @@ models.sequelize.sync({ force: false })
 app.use('/oauth', oauth);
 app.use('/islogin', islogin);
 //app.use('/logout', logout);
-app.use('/board', board);
+app.use('/board',auth,board);
 //app.use(express.static(path.join("C:/Users/KHH/Desktop/T/T_FrontEnd/build")));
 //app.use(express.static(path.join('/home/ubuntu/T_Frontend/build')));
 //console.log(path.join("C:/Users/KHH/Desktop/T/T_FrontEnd/build", "index.html"))
