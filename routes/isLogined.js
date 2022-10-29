@@ -45,7 +45,7 @@ exports.authManage = (req, res, next) => {
         //console.log(req.cookies);
         //req.decoded = jwt.verify(req.headers.authorization, SECRET_KEY);
         req.decoded = jwt.verify(req.cookies.token, SECRET_KEY);
-        if(req.decoded.code === 66 || req.decoded.code === 45) {
+        if(req.decoded.code === 66 || req.decoded.code === 45 || req.decoded.code === 43) {
             return next();
         } else {
             throw new NotManger('관리자만 접근 가능합니다.');
