@@ -3,7 +3,7 @@ const router = express.Router();
 const axios = require('axios');
 const models = require('../database/models');
 const { isLoggedIn, isNotLoggedIn, isManager} = require('./isLogined');
-
+const { auth,authManage } = require('./isLogined');
 router.get('/',async (req, res, next) => {
     models.Board.findAll({
         include: [
@@ -40,7 +40,7 @@ function senddata (req,res,data){
     res.send(data);
 }
 
-router.post('/',async (req, res, next) => {
+router.post('/', auth,async (req, res, next) => {
     //console.log(req);
     models.Board.create({
         contents : req.body.contents,
@@ -55,7 +55,7 @@ router.post('/',async (req, res, next) => {
     })
 })
 
-router.delete('/',async (req, res, next) => {
+router.delete('/',authManage,async (req, res, next) => {
     models.Board.destroy({
         where: {boardCode: req.body.boardCode}
     }).then(() => {
@@ -66,7 +66,7 @@ router.delete('/',async (req, res, next) => {
     })
 })
 
-router.post('/update',async (req, res, next) => {
+router.post('/update',authManage,async (req, res, next) => {
     models.Board.update({
         allowBoard : true,
     },{
@@ -79,7 +79,7 @@ router.post('/update',async (req, res, next) => {
     })
 })
 
-router.get('/manage',async (req, res, next) => {
+router.get('/manage',authManage,async (req, res, next) => {
     models.Board.findAll({
         include: [
             {
