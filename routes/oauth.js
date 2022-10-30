@@ -80,7 +80,8 @@ router.use('/', async (req, res) => {
             code: code
         }, jwtSecret, {
             expiresIn: '1h',
-            issuer: 'bsmboo'
+            issuer: 'bsmboo',
+            httpOnly: true
         });
         res.cookie('token', token)
         return res.redirect('/')
