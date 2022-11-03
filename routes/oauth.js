@@ -3,8 +3,6 @@ const router = express.Router();
 const axios = require('axios');
 const models = require('../database/models');
 const { isLoggedIn, isNotLoggedIn } = require('./isLogined');
-const passport = require('passport');
-const passportConfig = require('../passport');
 const jwt = require('jsonwebtoken');
 const { BsmOauth, BsmOauthError, BsmOauthErrorType, BsmOauthUserRole, StudentResource, TeacherResource } = require('bsm-oauth');
 require("dotenv").config();

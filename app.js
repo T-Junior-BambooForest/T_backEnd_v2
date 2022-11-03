@@ -5,8 +5,6 @@ const islogin = require('./routes/whoareyou');
 const boardRouter = require('./routes/post');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-const passport = require('passport');
-const passportConfig = require('./passport');
 const board = require('./routes/post');
 require("dotenv").config();
 const app = express()
@@ -22,7 +20,6 @@ app.use(
         credentials: true,
     }),
 );
-passportConfig()
 
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
