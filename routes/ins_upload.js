@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-function uploadInsta(){
+exports.uploadInsta = () => {
     const mediaUrl = "https://graph.facebook.com/v15.0/17841455266680504/media"
     const publishUrl = "https://graph.facebook.com/v15.0/17841455266680504/media_publish"
     const logoImage = "https://ifh.cc/g/Vt7g4L.png"
@@ -33,4 +33,3 @@ function uploadInsta(){
 }
 
 
-module.exports.insAPI = uploadInsta();

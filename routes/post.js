@@ -3,7 +3,7 @@ const router = express.Router();
 const axios = require('axios');
 const models = require('../database/models');
 const { auth,authManage } = require('./isLogined');
-const insUpload = require('./ins_upload');
+const { uploadInsta } = require('./ins_upload');
 
 router.get('/',async (req, res, next) => {
     models.Board.findAll({
@@ -73,6 +73,7 @@ router.post('/update',authManage,async (req, res, next) => {
     },{
         where: {boardCode: req.body.boardCode}
     }).then(() => {
+        uploadInsta();
         return res.status(200).send('Success');
     }).catch((err) => {
         console.error(err);
