@@ -3,7 +3,7 @@ const router = express.Router();
 const axios = require('axios');
 const models = require('../database/models');
 const { auth,authManage } = require('./isLogined');
-const { insAPI } = require('./ins_upload.js')
+const insUpload = require('./ins_upload');
 
 router.get('/',async (req, res, next) => {
     models.Board.findAll({
@@ -77,8 +77,8 @@ router.post('/update',authManage,async (req, res, next) => {
     }).catch((err) => {
         console.error(err);
         return res.status(500).send('Server Error');
-    })
-    insAPI()
+    });
+    insUpload.insAPI();
 })
 
 router.get('/manage',authManage,async (req, res, next) => {
