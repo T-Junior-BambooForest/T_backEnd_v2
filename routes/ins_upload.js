@@ -14,7 +14,7 @@ exports.uploadInsta = (data) => {
         const token = process.env.INS_TOKEN;
         let caption = "Test"
         let mediaId = null;
-        let mdurl = mediaUrl + "?image_url=" + image_url + "&caption=" + caption + "&access_token=" + access_token;
+        let mdurl = mediaUrl + "?image_url=" + logoImage + "&caption=" + caption + "&access_token=" + token;
         models.Board.findOne({
             attributes: ['contents'],
             where: {boardCode: data}
@@ -28,7 +28,7 @@ exports.uploadInsta = (data) => {
             .catch((err) => {
                 console.error(err);
             })
-        let pburl = publishUrl + "?creation_id=" + mediaId + "&access_token=" + access_token;
+        let pburl = publishUrl + "?creation_id=" + mediaId + "&access_token=" + token;
         axios.post(pburl)
             .then(() => console.log(`success`))
             .catch((err) => {
