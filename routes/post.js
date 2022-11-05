@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const models = require('../database/models');
-const { isLoggedIn, isNotLoggedIn, isManager} = require('./isLogined');
+const { instar } = require('./ins_upload.js')
 const { auth,authManage } = require('./isLogined');
+
 router.get('/',async (req, res, next) => {
     models.Board.findAll({
         include: [
