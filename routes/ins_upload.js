@@ -21,21 +21,22 @@ exports.uploadInsta = async (data) => {
             caption = result.contents;
         })
 
-         function setmedia() {
+
             axios.post(mdurl)
                 .then((res) => {
+                    console.log(res.data.id);
                     pburl = `${publishUrl}?creation_id=${res.data.id}&access_token=${token}`;
                 })
                 .catch((err) => {
                     console.error(err);
-                })
-        }
+                }).then(() => {
 
-        mediaId = await setmedia();
-        axios.post(pburl)
-            .then(() => console.log(`success`))
-            .catch((err) => {
-                console.error(err);
+
+                axios.post(pburl)
+                    .then(() => console.log(`success`))
+                    .catch((err) => {
+                        console.error(err);
+                    })
             })
 
 
