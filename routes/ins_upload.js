@@ -2,10 +2,8 @@ const axios = require('axios');
 require('dotenv').config();
 const models = require('../database/models');
 
-exports.uploadInsta = (data) => {
+exports.uploadInsta = async (data) => {
     try {
-
-
 
 
         const mediaUrl = process.env.MEDIA_URL;
@@ -21,14 +19,19 @@ exports.uploadInsta = (data) => {
         }).then((result) => {
             caption = result.contents;
         })
-        axios.post(mdurl)
-            .then((res) => {
-                mediaId = res.data.id;
-            })
-            .catch((err) => {
-                console.error(err);
-            })
-        let pburl = publishUrl + "?creation_id=" + mediaId + "&access_token=" + token;
+
+        async function setmedia() {
+            axios.post(mdurl)
+                .then((res) => {
+                    return res.data.id;
+                })
+                .catch((err) => {
+                    console.error(err);
+                })
+        }
+
+        mediaId = await setmedia();
+        let pburl = `${publishUrl}?creation_id=${await setmedia()}&access_token=${token}`;
         axios.post(pburl)
             .then(() => console.log(`success`))
             .catch((err) => {
