@@ -19,10 +19,10 @@ exports.uploadInsta = async (data) => {
             where: {boardCode: data}
         }).then((result) => {
             console.log(result);
-            caption = result.contents;
-        })
+            caption = result.dataValues.contents;
+        }).then(() => {
 
-        mdurl = mediaUrl + "?image_url=" + logoImage + "&caption=" + caption + "&access_token=" + token;
+            mdurl = mediaUrl + "?image_url=" + logoImage + "&caption=" + caption + "&access_token=" + token;
             axios.post(mdurl)
                 .then((res) => {
                     console.log(res.data.id);
@@ -39,7 +39,9 @@ exports.uploadInsta = async (data) => {
                         console.error(err);
                     })
             })
-
+        }).catch((err) => {
+            console.error(err);
+        })
 
     } catch (err) {
         console.log(err);
