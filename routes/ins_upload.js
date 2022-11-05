@@ -21,8 +21,7 @@ exports.uploadInsta = async (data) => {
             console.log(result);
             caption = result.dataValues.contents;
         }).then(() => {
-
-            mdurl = mediaUrl + "?image_url=" + logoImage + "&caption=" + caption + "&access_token=" + token;
+            mdurl = mediaUrl + "?image_url=" + logoImage + "&caption=" + encodeURI(caption) + "&access_token=" + token;
             axios.post(mdurl)
                 .then((res) => {
                     console.log(res.data.id);
@@ -36,7 +35,7 @@ exports.uploadInsta = async (data) => {
                 axios.post(pburl)
                     .then(() => console.log(`success`))
                     .catch((err) => {
-                        console.error(err);
+                        console.error('tlqkf');
                     })
             })
         }).catch((err) => {
