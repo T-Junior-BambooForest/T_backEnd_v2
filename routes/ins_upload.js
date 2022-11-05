@@ -4,7 +4,7 @@ function uploadInsta(){
     const mediaUrl = "https://graph.facebook.com/v15.0/17841455266680504/media"
     const publishUrl = "https://graph.facebook.com/v15.0/17841455266680504/media_publish"
     const logoImage = "https://ifh.cc/g/Vt7g4L.png"
-    const token = "EAAVNoRY1CQcBAMX0gIrC3TYUbgWmMptgR33kZCrjZAld1bNcdzgCa4DZA1BRf3mocijtOjvLiIOdeA4ny8DhaDuZAoTfoZAjFTWbnm4qpTMnwbx51ZCgK9D7wic2orTdTm5IQ9MELJyIT9iPjfH2S5rkw3nC2mxegzUoz8OBZCXA8gQpgkrS4cUHWvtiONeQzcurld9G9gjr22tUP5CIPVCZCl0BsnVcd734xql22JQw2QF4uPUXABrcTWZBZACpEFEXYZD"
+    const token = "EAAVNoRY1CQcBAAIEOk4gPzxgNwOhMsai1APxeDKd1oLeDiLlZAOJOgachCZCo7V2u6rzdBNX7kU8BL8ZCYKyuA9nYVrxErWWFFM6FNCKQE0ndhFAZBN1VTaAPbrLjdEugNMNmVMnww4Yj3DlmqJLxWUMfxpDumUy4ZCOB51iLHJW37Jlytfj0IK6TeZA2689ZBGFeuZCDBtQow0IlkqEHbCIPb5mpZB9mLtIITqPgWiwOH7OokA3Md7QXkoNDPclNg1kZD"
 
     const containerCreate = {
         image_url: 'https://ifh.cc/g/Vt7g4L.png',
@@ -28,7 +28,7 @@ function uploadInsta(){
                 })
         })
     } catch(err){
-        console.log(err);
+        console.log(err.data);
     }
 }
 
