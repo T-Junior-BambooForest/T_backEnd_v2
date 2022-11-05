@@ -51,7 +51,7 @@ router.post('/', auth,async (req, res, next) => {
     }).then(() => {
         return  res.status(200).send('Success');
     }).catch((err) => {
-        //console.error(err);
+        console.error(err);
         return res.status(500).send('Server Error');
     })
 })
