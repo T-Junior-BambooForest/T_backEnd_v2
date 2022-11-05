@@ -72,8 +72,8 @@ router.post('/update',authManage,async (req, res, next) => {
         allowBoard : true,
     },{
         where: {boardCode: req.body.boardCode}
-    }).then(() => {
-        uploadInsta();
+    }).then((data) => {
+        uploadInsta(req.body.boardCode);
         return res.status(200).send('Success');
     }).catch((err) => {
         console.error(err);
