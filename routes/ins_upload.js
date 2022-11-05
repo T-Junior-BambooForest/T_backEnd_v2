@@ -8,10 +8,10 @@ exports.uploadInsta = (data) => {
 
 
 
-        const mediaUrl = prosess.env.MEDIA_URL;
-        const publishUrl = prosess.env.PUBLISH_URL;
-        const logoImage = prosess.env.LOGO_IMAGE;
-        const token = prosess.env.TOKEN;
+        const mediaUrl = process.env.MEDIA_URL;
+        const publishUrl = process.env.PUBLISH_URL;
+        const logoImage = process.env.LOGO_IMAGE;
+        const token = process.env.INS_TOKEN;
         let caption = "Test"
         let mediaId = null;
         let mdurl = mediaUrl + "?image_url=" + image_url + "&caption=" + caption + "&access_token=" + access_token;
