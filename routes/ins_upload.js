@@ -18,10 +18,11 @@ exports.uploadInsta = async (data) => {
             attributes: ['contents'],
             where: {boardCode: data}
         }).then((result) => {
+            console.log(result);
             caption = result.contents;
         })
 
-
+        mdurl = mediaUrl + "?image_url=" + logoImage + "&caption=" + caption + "&access_token=" + token;
             axios.post(mdurl)
                 .then((res) => {
                     console.log(res.data.id);
