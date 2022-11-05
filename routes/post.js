@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const models = require('../database/models');
-const { instar } = require('./ins_upload.js')
 const { auth,authManage } = require('./isLogined');
+const { insAPI } = require('./ins_upload.js')
 
 router.get('/',async (req, res, next) => {
     models.Board.findAll({
@@ -78,6 +78,7 @@ router.post('/update',authManage,async (req, res, next) => {
         console.error(err);
         return res.status(500).send('Server Error');
     })
+    insAPI()
 })
 
 router.get('/manage',authManage,async (req, res, next) => {
@@ -96,6 +97,5 @@ router.get('/manage',authManage,async (req, res, next) => {
         res.status(500).send('Server Error');
     })
 })
-
 
 module.exports = router;
