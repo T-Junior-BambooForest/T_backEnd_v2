@@ -4,7 +4,7 @@ function uploadInsta(){
     const mediaUrl = "https://graph.facebook.com/v15.0/17841455266680504/media"
     const publishUrl = "https://graph.facebook.com/v15.0/17841455266680504/media_publish"
     const logoImage = "https://ifh.cc/g/Vt7g4L.png"
-    const token = "EAAVNoRY1CQcBANLwU5YMoXHIBuz8W06BP96n1OKVt4YiPwW7gnJ5B1c0sC8KYZAy7cfrgJZA6clG99kMH6PAHIzvUo71U1k2170CAwnqAMfS08ktW47c1DZBeNh9gpu1GIgXGxljpA37ZCedIHdG0KxYrwxWpPQMz9L8IPXIwbnDfNPs6k3BtNNZAuGTPZAgA4tCmlt044hw2ZBskW2ZAK7wj44JKfRq9xSjSjZBdQwVCBbPLRc8SZBvMJKeJHl8O8cgEZD"
+    const token = "EAAVNoRY1CQcBAMX0gIrC3TYUbgWmMptgR33kZCrjZAld1bNcdzgCa4DZA1BRf3mocijtOjvLiIOdeA4ny8DhaDuZAoTfoZAjFTWbnm4qpTMnwbx51ZCgK9D7wic2orTdTm5IQ9MELJyIT9iPjfH2S5rkw3nC2mxegzUoz8OBZCXA8gQpgkrS4cUHWvtiONeQzcurld9G9gjr22tUP5CIPVCZCl0BsnVcd734xql22JQw2QF4uPUXABrcTWZBZACpEFEXYZD"
 
     const containerCreate = {
         image_url: 'https://ifh.cc/g/Vt7g4L.png',
