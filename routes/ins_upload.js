@@ -13,6 +13,7 @@ exports.uploadInsta = async (data) => {
         let caption = "Test"
         let mediaId = null;
         let mdurl = mediaUrl + "?image_url=" + logoImage + "&caption=" + caption + "&access_token=" + token;
+        let pburl = `${publishUrl}?creation_id=${null}&access_token=${token}`;
         models.Board.findOne({
             attributes: ['contents'],
             where: {boardCode: data}
@@ -20,10 +21,10 @@ exports.uploadInsta = async (data) => {
             caption = result.contents;
         })
 
-        async function setmedia() {
+         function setmedia() {
             axios.post(mdurl)
                 .then((res) => {
-                    return res.data.id;
+                    pburl = `${publishUrl}?creation_id=${res.data.id}&access_token=${token}`;
                 })
                 .catch((err) => {
                     console.error(err);
@@ -31,7 +32,6 @@ exports.uploadInsta = async (data) => {
         }
 
         mediaId = await setmedia();
-        let pburl = `${publishUrl}?creation_id=${await setmedia()}&access_token=${token}`;
         axios.post(pburl)
             .then(() => console.log(`success`))
             .catch((err) => {
