@@ -20,11 +20,17 @@ exports.uploadInsta = () => {
         axios.post(mdurl)
             .then((res) => {
                 mediaId = res.data.id;
-            }).then(() => {
-            let pburl = publishUrl + "?creation_id=" + mediaId + "&access_token=" + containerCreate.access_token;
-            axios.post(pburl)
-                .then(() =>  console.log(`success`))
-        })
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+        let pburl = publishUrl + "?creation_id=" + mediaId + "&access_token=" + containerCreate.access_token;
+        axios.post(pburl)
+            .then(() =>  console.log(`success`))
+            .catch((err) => {
+                console.error(err);
+            })
+
 
     } catch (err) {
         console.log(err);
