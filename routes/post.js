@@ -78,7 +78,7 @@ router.post('/update',authManage,async (req, res, next) => {
         console.error(err);
         return res.status(500).send('Server Error');
     });
-    insUpload.insAPI();
+    // insUpload.insAPI();
 })
 
 router.get('/manage',authManage,async (req, res, next) => {
