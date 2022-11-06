@@ -71,7 +71,7 @@ if (process.env.NODE_ENV == 'production') {
     server.listen(process.env.PORT || 8000, () => {
         console.log("HTTPS server listening on port " + process.env.PORT || 8000);
     })
-} else if (process.env.NODE_ENV == 'development') {
+} else {
     app.listen(process.env.PORT || 8000, () => {
         console.log("HTTP server listening on port " + process.env.PORT || 8000);
     })
