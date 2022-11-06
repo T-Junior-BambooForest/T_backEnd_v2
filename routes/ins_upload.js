@@ -15,11 +15,22 @@ exports.uploadInsta = async (data) => {
         let mdurl = mediaUrl + "?image_url=" + logoImage + "&caption=" + caption + "&access_token=" + token;
         let pburl = `${publishUrl}?creation_id=${null}&access_token=${token}`;
         models.Board.findOne({
-            attributes: ['contents'],
-            where: {boardCode: data}
+            include: [
+                {
+                    model: models.Users,
+                    attributes: ['code', 'name', 'nickname'],
+                },
+                {
+                    model: models.AllowBoard,
+                    attributes: ['AllowBoardCode'],
+                }
+            ],
+            order: [['boardCode', 'ASC']],
+            where: {allowBoard: true, boardCode: data}
         }).then((result) => {
+            result = JSON.parse(JSON.stringify(result));
             console.log(result);
-            caption = result.dataValues.contents;
+            caption = `부산소마고 대나무숲 ${result.AllowBoard.AllowBoardCode}번째 제보\n${result.contents}\n제보자: ${result.User.nickname}`;
         }).then(() => {
             mdurl = mediaUrl + "?image_url=" + logoImage + "&caption=" + encodeURI(caption) + "&access_token=" + token;
             axios.post(mdurl)
