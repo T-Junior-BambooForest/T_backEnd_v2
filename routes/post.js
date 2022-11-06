@@ -11,42 +11,34 @@ router.get('/',async (req, res, next) => {
             {
                 model: models.Users,
                 attributes: ['code', 'name', 'nickname'],
+            },
+            {
+                model: models.AllowBoard,
+                attributes: ['AllowBoardCode'],
             }
         ],
-        where : {allowBoard : true},
         order: [['boardCode', 'ASC']],
+        where: {allowBoard: true}
     }).then((result) => {
         result = JSON.parse(JSON.stringify(result));
-        return senddata(req,res, change(result));
+        return senddata(req,res, (result));
     }).catch((err) => {
         console.error(err);
         res.status(500).send('Server Error');
     })
 })
-function change (data){
-    data = JSON.parse(JSON.stringify(data));
-    data.map((i) => {
-        if(i.isAnonymous == true){
-            i.Usercode = -1;
-            i.User.code = -1;
-            i.User.name = '익명';
-            i.User.nickname = '익명';
-        }
-    })
 
-    return data;
-}
 
-function senddata (req,res,data){
-    res.send(data);
-}
-
-router.post('/', auth,async (req, res, next) => {
+router.post('/',async (req, res, next) => {
     //console.log(req);
+    let {Usercode,isAnonymous} = req.body;
+    if(isAnonymous == true){
+        Usercode = -1;
+    }
     models.Board.create({
         contents : req.body.contents,
         allowBoard: false,
-        Usercode: req.body.Usercode,
+        userCode: Usercode,
         isAnonymous: req.body.isAnonymous
     }).then(() => {
         return  res.status(200).send('Success');
@@ -56,7 +48,8 @@ router.post('/', auth,async (req, res, next) => {
     })
 })
 
-router.delete('/',authManage,async (req, res, next) => {
+router.delete('/',async (req, res, next) => {
+
     models.Board.destroy({
         where: {boardCode: req.body.boardCode}
     }).then(() => {
@@ -67,13 +60,20 @@ router.delete('/',authManage,async (req, res, next) => {
     })
 })
 
-router.post('/update',authManage,async (req, res, next) => {
+router.post('/update',async (req, res, next) => {
     models.Board.update({
         allowBoard : true,
     },{
         where: {boardCode: req.body.boardCode}
-    }).then((data) => {
+    }).catch(err => {
+        console.error(err);
+        return res.status(500).send('Server Error');
+    })
+    models.AllowBoard.create({
+        boardCode : req.body.boardCode,
+        }).then((data) => {
         uploadInsta(req.body.boardCode);
+        //console.log(data);
         return res.status(200).send('Success');
     }).catch((err) => {
         console.error(err);
@@ -82,12 +82,15 @@ router.post('/update',authManage,async (req, res, next) => {
     // insUpload.insAPI();
 })
 
-router.get('/manage',authManage,async (req, res, next) => {
+router.get('/manage',async (req, res, next) => {
     models.Board.findAll({
         include: [
             {
                 model: models.Users,
                 attributes: ['code', 'name', 'nickname'],
+            },{
+                model: models.AllowBoard,
+                attributes: ['AllowBoardCode'],
             }
         ],
         order: [['boardCode', 'ASC']],
