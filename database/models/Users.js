@@ -38,7 +38,12 @@ module.exports = (sequelize, DataTypes) => {
         charset: 'utf8',
         collate: 'utf8_general_ci',
     });
-
+    Users.associate = models => {
+        /**
+         * Users안에 있는 "id값"을 "user_id라는 컬럼 이름"으로 UserInfo모델에 새로운 컬럼으로 추가한다.
+         */
+        Users.hasMany(models.Board, {foreignKey: "userCode", sourceKey: 'code'});
+    };
 
     return Users;
 };
