@@ -29,7 +29,7 @@ router.get('/',async (req, res, next) => {
 })
 
 
-router.post('/',async (req, res, next) => {
+router.post('/',auth,async (req, res, next) => {
     //console.log(req);
     let {Usercode,isAnonymous} = req.body;
     if(isAnonymous == true){
@@ -48,7 +48,7 @@ router.post('/',async (req, res, next) => {
     })
 })
 
-router.delete('/',async (req, res, next) => {
+router.delete('/',authManage,async (req, res, next) => {
 
     models.Board.destroy({
         where: {boardCode: req.body.boardCode}
@@ -60,7 +60,7 @@ router.delete('/',async (req, res, next) => {
     })
 })
 
-router.post('/update',async (req, res, next) => {
+router.post('/update',authManage,async (req, res, next) => {
     models.Board.update({
         allowBoard : true,
     },{
@@ -82,7 +82,7 @@ router.post('/update',async (req, res, next) => {
     // insUpload.insAPI();
 })
 
-router.get('/manage',async (req, res, next) => {
+router.get('/manage',authManage,async (req, res, next) => {
     models.Board.findAll({
         include: [
             {
