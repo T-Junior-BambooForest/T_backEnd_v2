@@ -27,8 +27,22 @@ module.exports = (sequelize, DataTypes) => {
     });
     Board.associate = function (model){
         model.Board.belongsTo(model.Users, {
-            foreignKey: 'Usercode',
+            foreignKey: 'userCode',
+            sourceKey: 'code'
         });
-    }
+
+        /**
+         * Users안에 있는 "id값"을 "user_id라는 컬럼 이름"으로 UserInfo모델에 새로운 컬럼으로 추가한다.
+         */
+            Board.hasOne(model.AllowBoard, {
+                foreignKey: {
+                    name: "boardCode",
+                    unique: true
+                },
+                sourceKey: 'boardCode',
+
+
+            });
+    };
     return Board;
 }
