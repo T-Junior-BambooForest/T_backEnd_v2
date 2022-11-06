@@ -21,7 +21,7 @@ router.get('/',async (req, res, next) => {
         where: {allowBoard: true}
     }).then((result) => {
         result = JSON.parse(JSON.stringify(result));
-        return senddata(req,res, (result));
+        return res.json(result);
     }).catch((err) => {
         console.error(err);
         res.status(500).send('Server Error');
