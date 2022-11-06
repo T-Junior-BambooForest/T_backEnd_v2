@@ -5,6 +5,8 @@ const islogin = require('./routes/whoareyou');
 const boardRouter = require('./routes/post');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const fs = require("fs");
+const http = require("http");
 const board = require('./routes/post');
 require("dotenv").config();
 const app = express()
@@ -46,13 +48,33 @@ app.use("/",function (req, res) {
     //console.log(req.user)
    // res.sendFile(path.join("C:/Users/KHH/Desktop/T/T_FrontEnd/build", "index.html"));
 })
-
-
-
 app.use(function(req, res, next) {
-   return res.status(404).send('Sorry cant find that!');
+    return res.status(404).send('Sorry cant find that!');
 });
 
-app.listen(process.env.PORT || 8000 ,() => {
-    console.log("Sever On");
-})
+const https = require('https');
+
+
+
+if (process.env.NODE_ENV == 'production') {
+    const options = {
+
+        ca: fs.readFileSync('/etc/letsencrypt/live/bsmboo.kro.kr/fullchain.pem'),
+
+        key: fs.readFileSync('/etc/letsencrypt/live/bsmboo.kro.kr/privkey.pem'),
+
+        cert: fs.readFileSync('/etc/letsencrypt/live/bsmboo.kro.kr/cert.pem')
+
+    };
+    const server = https.createServer(options, app);
+
+    server.listen(process.env.PORT || 8000, () => {
+        console.log("HTTPS server listening on port " + process.env.PORT || 8000);
+    })
+} else if (process.env.NODE_ENV == 'development') {
+    app.listen(process.env.PORT || 8000, () => {
+        console.log("HTTP server listening on port " + process.env.PORT || 8000);
+    })
+    console.log("Development Mode");
+}
+
