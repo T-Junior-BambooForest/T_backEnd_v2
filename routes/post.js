@@ -21,7 +21,7 @@ router.get('/',async (req, res, next) => {
         where: {allowBoard: true}
     }).then((result) => {
         result = JSON.parse(JSON.stringify(result));
-        return res.json(result);
+        return res.json(result.reverse());
     }).catch((err) => {
         console.error(err);
         res.status(500).send('Server Error');
