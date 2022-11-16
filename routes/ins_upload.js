@@ -30,7 +30,7 @@ exports.uploadInsta = async (data) => {
         }).then((result) => {
             result = JSON.parse(JSON.stringify(result));
             console.log(result);
-            caption = `부산소마고 대나무숲 ${result.AllowBoard.AllowBoardCode}번째 제보\n${result.contents}\n제보자: ${result.User.nickname}`;
+            caption = `부산소마고 대나무숲 ${result.AllowBoard.AllowBoardCode}번째 제보\n${result.contents}\n- ${result.User.nickname}님 제보`;
         }).then(() => {
             mdurl = mediaUrl + "?image_url=" + logoImage + "&caption=" + encodeURI(caption) + "&access_token=" + token;
             axios.post(mdurl)
@@ -46,7 +46,7 @@ exports.uploadInsta = async (data) => {
                 axios.post(pburl)
                     .then(() => console.log(`success`))
                     .catch((err) => {
-                        console.error('tlqkf');
+                        console.error('error');
                     })
             })
         }).catch((err) => {
