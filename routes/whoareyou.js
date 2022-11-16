@@ -6,9 +6,9 @@ const models = require('../database/models');
 const { auth } = require('./isLogined');
 const SECRET_KEY = 'process.env.JWT_SECRET';
 router.get('/', auth, (req, res) => {
-    const nickname = req.decoded.nickname;
+    //const nickname = req.decoded.nickname;
     const code = req.decoded.code;
-   let  user = models.Users.findOne({
+    models.Users.findOne({
         where: {
             code: code
         }
@@ -19,8 +19,8 @@ router.get('/', auth, (req, res) => {
             data: result
      })
     }).catch((err) => {
-        console.error(err);
-        return res.status(500).send('Server Error');
+        //console.error(err);
+        return res.status(401).send('Not Authorized');
     })
 
 });
