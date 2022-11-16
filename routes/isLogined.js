@@ -65,7 +65,6 @@ exports.authManage = (req, res, next) => {
         }
         // 토큰의 비밀키가 일치하지 않는 경우
         if (error.name === 'JsonWebTokenError') {
-           // console.log(error)
             return res.status(401).json({
                 code: 401,
                 message: '유효하지 않은 토큰입니다.'
