@@ -59,11 +59,11 @@ const https = require('https');
 if (process.env.NODE_ENV == 'production') {
     const options = {
 
-        ca: fs.readFileSync('/etc/letsencrypt/live/bsmboo.kro.kr/fullchain.pem'),
+        ca: fs.readFileSync('/etc/letsencrypt/live/api.bsmboo.kro.kr/fullchain.pem'),
 
-        key: fs.readFileSync('/etc/letsencrypt/live/bsmboo.kro.kr/privkey.pem'),
+        key: fs.readFileSync('/etc/letsencrypt/live/api.bsmboo.kro.kr/privkey.pem'),
 
-        cert: fs.readFileSync('/etc/letsencrypt/live/bsmboo.kro.kr/cert.pem')
+        cert: fs.readFileSync('/etc/letsencrypt/live/api.bsmboo.kro.kr/cert.pem')
 
     };
     const server = https.createServer(options, app);
