@@ -44,7 +44,7 @@ app.use('/board',board);
 app.use("/",function (req, res) {
     //console.log(req)
     //res.end()
-    res.redirect("http://bsmboo.kro.kr")
+    res.redirect("https://bsmboo.kro.kr")
     //console.log(req.user)
    // res.sendFile(path.join("C:/Users/KHH/Desktop/T/T_FrontEnd/build", "index.html"));
 })
