@@ -8,7 +8,6 @@ exports.uploadFacebk = async (data) => {
         const bamboo = process.env.BAMBOO_LINK;
         const token = process.env.FBK_TOKEN;
         let message = "Test"
-        let mediaId = null;
         let fburl = feedUrl + "?link=" + bamboo + "&message=" + message + "&access_token=" + token;
         models.Board.findOne({
             include: [
