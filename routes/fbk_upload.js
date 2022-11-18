@@ -25,7 +25,7 @@ exports.uploadFacebk = async (data) => {
         }).then((result) => {
             result = JSON.parse(JSON.stringify(result));
             console.log(result);
-            caption = `부산소마고 대나무숲 ${result.AllowBoard.AllowBoardCode}번째 제보\n${result.contents}\n- ${result.User.nickname}님 제보 -`;
+            message = `부산소마고 대나무숲 ${result.AllowBoard.AllowBoardCode}번째 제보\n${result.contents}\n- ${result.User.name}님 제보 -`;
         }).then(() => {
             fburl = feedUrl + "?link=" + bamboo + "&message=" + encodeURI(message) + "&access_token=" + token;
             axios.post(fburl)
