@@ -4,6 +4,7 @@ const axios = require('axios');
 const models = require('../database/models');
 const { auth,authManage } = require('./isLogined');
 const { uploadInsta } = require('./ins_upload');
+const {uploadFacebk} = require("./fbk_upload");
 
 router.get('/',async (req, res, next) => {
     models.Board.findAll({
@@ -73,6 +74,7 @@ router.post('/update',authManage,async (req, res, next) => {
         boardCode : req.body.boardCode,
         }).then((data) => {
         uploadInsta(req.body.boardCode);
+        uploadFacebk(req.body.boardCode);
         //console.log(data);
         return res.status(200).send('Success');
     }).catch((err) => {

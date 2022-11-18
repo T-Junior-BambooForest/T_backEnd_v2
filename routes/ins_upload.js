@@ -4,8 +4,6 @@ const models = require('../database/models');
 
 exports.uploadInsta = async (data) => {
     try {
-
-
         const mediaUrl = process.env.MEDIA_URL;
         const publishUrl = process.env.PUBLISH_URL;
         const logoImage = process.env.LOGO_IMAGE;
