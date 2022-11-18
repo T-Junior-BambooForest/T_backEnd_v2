@@ -18,7 +18,7 @@ router.get('/',async (req, res, next) => {
                 attributes: ['AllowBoardCode'],
             }
         ],
-        order: [['boardCode', 'ASC']],
+        order: [['AllowBoardCode', 'ASC']],
         where: {allowBoard: true}
     }).then((result) => {
         result = JSON.parse(JSON.stringify(result));
