@@ -40,7 +40,8 @@ router.post('/',auth,async (req, res, next) => {
         contents : req.body.contents,
         allowBoard: false,
         userCode: Usercode,
-        isAnonymous: req.body.isAnonymous
+        isAnonymous: req.body.isAnonymous,
+        Image: req.body.Image
     }).then(() => {
         return  res.status(200).send('Success');
     }).catch((err) => {
