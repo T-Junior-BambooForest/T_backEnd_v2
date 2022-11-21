@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         isAnonymous: {
             type: DataTypes.BOOLEAN
+        },
+        Image: {
+            type: DataTypes.STRING
         }
         },{
         // 테이블에 대한 설정 지정// static init의 매개변수와 연결되는 옵션, model/index.js에서 연결
