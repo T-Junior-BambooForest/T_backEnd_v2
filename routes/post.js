@@ -45,12 +45,12 @@ router.post('/',auth,async (req, res, next) => {
         isAnonymous: isAnonymous,
         Image: Image
     }).then(() => {
-        df = fs.readFileSync('../test.json').toString();
+        df = fs.readFileSync('test.json').toString();
         let test = {contents,Image};
         let a = JSON.parse(df);
         a.push(test);
         a = JSON.Stringify(a);
-        fs.writeFileSync('../test.json',a);
+        fs.writeFileSync('test.json',a);
         return  res.status(200).send('Success');
     }).catch((err) => {
         console.error(err);
