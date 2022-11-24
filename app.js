@@ -10,7 +10,7 @@ const http = require("http");
 const board = require('./routes/post');
 require("dotenv").config();
 const app = express()
-
+const Image = require('./routes/Image');
 app.use(express.json({
     limit : "50mb"
 }));
@@ -45,7 +45,7 @@ app.use('/oauth', oauth);
 app.use('/islogin', islogin);
 //app.use('/logout', logout);
 app.use('/board',board);
-
+app.use('/Image',Image);
 
 //app.use(express.static(path.join("C:/Users/KHH/Desktop/T/T_FrontEnd/build")));
 //app.use(express.static(path.join('/home/ubuntu/T_Frontend/build')));
