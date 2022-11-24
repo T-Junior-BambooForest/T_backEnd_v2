@@ -10,7 +10,7 @@ const http = require("http");
 const board = require('./routes/post');
 require("dotenv").config();
 const app = express()
-const upload = require("./middlewares/multer");
+
 app.use(express.json({
     limit : "50mb"
 }));
