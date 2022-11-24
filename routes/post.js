@@ -48,9 +48,11 @@ router.post('/',auth,async (req, res, next) => {
         a.push(test);
         a = JSON.stringify(a);
         fs.writeFileSync(path.join(__dirname,'test.json'),a);
+
+
     }).catch((err) => {
         console.error(err);
-        res.status(500).send('Server Error');
+        return res.status(500).send('Server Error');
     })
 
     if(isAnonymous == true){
@@ -62,14 +64,44 @@ router.post('/',auth,async (req, res, next) => {
         userCode: Usercode,
         isAnonymous: isAnonymous,
         Image: Image
-    }).then(() => {
-
+    }).then((result) => {
+        console.log(result);
+        ImageUp(req,res);
         return  res.status(200).send('Success');
     }).catch((err) => {
         console.error(err);
         return res.status(500).send('Server Error');
     })
 })
+function ImageUp(req,res){
+    try {
+
+        let file = req.body.Image;
+        let fileName;
+        if (file != file.replace(/^data:image\/png;base64,/, "")) {
+             fileName =path.join( __dirname , "../Image", req.body.boardCode,".png");
+            file = file.replace(/^data:image\/png;base64,/, "");
+        }
+        else if (file != file.replace(/^data:image\/jpeg;base64,/, "")) {
+             fileName = path.join( __dirname ,"../Image", req.body.boardCode,".jpeg");
+            file = file.replace(/^data:image\/jpeg;base64,/, "");
+        }
+        else if (file != file.replace(/^data:image\/jpg;base64,/, "")) {
+             fileName =path.join( __dirname ,"../Image", req.body.boardCode,".jpg");
+            file = file.replace(/^data:image\/jpg;base64,/, "");
+        }
+        else{
+            return;
+        }
+
+
+        fs.writeFileSync(fileName, file, "base64");
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
 
 router.delete('/',authManage,async (req, res, next) => {
 
@@ -97,10 +129,6 @@ router.post('/update',authManage,async (req, res, next) => {
         }).then((data) => {
         uploadInsta(req.body.boardCode);
         uploadFacebk(req.body.boardCode);
-
-
-
-
 
         //console.log(data);
         return res.status(200).send('Success');

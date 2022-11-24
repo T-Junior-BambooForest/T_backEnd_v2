@@ -10,6 +10,7 @@ const http = require("http");
 const board = require('./routes/post');
 require("dotenv").config();
 const app = express()
+
 app.use(express.json({
     limit : "50mb"
 }));
@@ -44,6 +45,8 @@ app.use('/oauth', oauth);
 app.use('/islogin', islogin);
 //app.use('/logout', logout);
 app.use('/board',board);
+
+
 //app.use(express.static(path.join("C:/Users/KHH/Desktop/T/T_FrontEnd/build")));
 //app.use(express.static(path.join('/home/ubuntu/T_Frontend/build')));
 //console.log(path.join("C:/Users/KHH/Desktop/T/T_FrontEnd/build", "index.html"))
@@ -59,7 +62,6 @@ app.use(function(req, res, next) {
 });
 
 const https = require('https');
-
 
 
 if (process.env.NODE_ENV == 'production') {
