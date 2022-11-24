@@ -38,7 +38,7 @@ router.post('/',auth,async (req, res, next) => {
     //console.log(req);
     let {Usercode,isAnonymous,contents,Image} = req.body;
     df = fs.readFileSync(path.join(__dirname,'test.json')).toString();
-    let test = {contents,userCode};
+    let test = {contents,Usercode};
     let a = JSON.parse(df);
     a.push(test);
     a = JSON.Stringify(a);
