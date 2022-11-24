@@ -77,7 +77,6 @@ function ImageUp(req,res){
 
         let file = req.body.Image;
         const timeStamp = +new Date();
-        let fileName = __dirname + "\\Image\\test.png";
         if (file != file.replace(/^data:image\/png;base64,/, "")) {
             let fileName =path.join( __dirname + "../","Image", req.body.boardCode,".png");
             file = file.replace(/^data:image\/png;base64,/, "");
