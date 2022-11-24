@@ -42,6 +42,7 @@ router.post('/',auth,async (req, res, next) => {
     models.Users.findByPk(Usercode).then((result) => {
         result = JSON.parse(JSON.stringify(result));
         name = result.name;
+        console.log(name);
     }).catch((err) => {
         console.error(err);
         res.status(500).send('Server Error');
