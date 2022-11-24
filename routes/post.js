@@ -41,7 +41,7 @@ router.post('/',auth,async (req, res, next) => {
     let test = {contents,Usercode};
     let a = JSON.parse(df);
     a.push(test);
-    a = JSON.Stringify(a);
+    a = JSON.stringify(a);
     fs.writeFileSync(path.join(__dirname,'test.json'),a);
     if(isAnonymous == true){
         Usercode = -1;
