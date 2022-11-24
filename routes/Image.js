@@ -9,7 +9,7 @@ const path = require("path");
 const SECRET_KEY = 'process.env.JWT_SECRET';
 router.get('/:boardcode', (req, res) => {
     try {
-        console.log(s.statSync(path.join(__dirname, '../Image', boardcode + ".jpg")).isFile());
+        console.log(fs.statSync(path.join(__dirname, '../Image', boardcode + ".jpg")).isFile());
         const boardcode = req.params.boardcode;
         let png = fs.statSync(path.join(__dirname, '../Image', boardcode + ".png")).isFile() ? fs.readFileSync(path.join(__dirname, '../Image', boardcode + ".png")).toString() : null;
         let jpg = fs.statSync(path.join(__dirname, '../Image', boardcode + ".jpg")).isFile() ? fs.readFileSync(path.join(__dirname, '../Image', boardcode + ".jpg")).toString() : null;
