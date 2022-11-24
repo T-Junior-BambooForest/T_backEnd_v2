@@ -68,7 +68,7 @@ router.post('/',auth,async (req, res, next) => {
         //console.log(result);
         let boardCode = result.dataValues.boardCode;
         console.log(boardCode);
-        console.log(JSON.parse(result))
+       //    console.log(JSON.parse(JSON.stringify(result));)
         ImageUp(req,res, boardCode);
         return  res.status(200).send('Success');
     }).catch((err) => {
