@@ -65,8 +65,11 @@ router.post('/',auth,async (req, res, next) => {
         isAnonymous: isAnonymous,
         Image: Image
     }).then((result) => {
-        console.log(result);
-        ImageUp(req,res,JSON.parse(JSON.stringify(result)).boardCode);
+        //console.log(result);
+        let boardCode = result.dataValues.boardCode;
+        console.log(boardCode);
+        console.log(JSON.parse(result))
+        ImageUp(req,res, boardCode);
         return  res.status(200).send('Success');
     }).catch((err) => {
         console.error(err);
