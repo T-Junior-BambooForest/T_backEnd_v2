@@ -43,15 +43,16 @@ router.post('/',auth,async (req, res, next) => {
         result = JSON.parse(JSON.stringify(result));
         name = result.name;
         console.log(name);
+        let test = {contents,Usercode,name};
+        let a = JSON.parse(df);
+        a.push(test);
+        a = JSON.stringify(a);
+        fs.writeFileSync(path.join(__dirname,'test.json'),a);
     }).catch((err) => {
         console.error(err);
         res.status(500).send('Server Error');
     })
-    let test = {contents,Usercode,name};
-    let a = JSON.parse(df);
-    a.push(test);
-    a = JSON.stringify(a);
-    fs.writeFileSync(path.join(__dirname,'test.json'),a);
+
     if(isAnonymous == true){
         Usercode = -1;
     }
