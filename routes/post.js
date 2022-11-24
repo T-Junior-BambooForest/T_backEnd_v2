@@ -66,14 +66,14 @@ router.post('/',auth,async (req, res, next) => {
         Image: Image
     }).then((result) => {
         console.log(result);
-        ImageUp(req,res);
+        ImageUp(req,res,JSON.parse(JSON.stringify(result)).boardCode);
         return  res.status(200).send('Success');
     }).catch((err) => {
         console.error(err);
         return res.status(500).send('Server Error');
     })
 })
-function ImageUp(req,res){
+function ImageUp(req,res,boardCode){
     try {
 
         let file = req.body.Image;
@@ -87,7 +87,7 @@ function ImageUp(req,res){
             file = file.replace(/^data:image\/jpeg;base64,/, "");
         }
         else if (file != file.replace(/^data:image\/jpg;base64,/, "")) {
-             fileName =path.join( __dirname ,"../Image", req.body.boardCode,".jpg");
+             fileName =path.join( __dirname ,"../Image", boardCode,".jpg");
             file = file.replace(/^data:image\/jpg;base64,/, "");
         }
         else{
