@@ -8,17 +8,21 @@ const fs = require("fs");
 const path = require("path");
 const SECRET_KEY = 'process.env.JWT_SECRET';
 router.get('/:boardcode', (req, res) => {
-    const boardcode = req.params.boardcode;
-   let png = fs.readFileSync(path.join(__dirname,'../Image',boardcode+".png")).toString();
-   let jpg = fs.readFileSync(path.join(__dirname,'../Image',boardcode+".jpg")).toString();
-   let jpeg = fs.readFileSync(path.join(__dirname,'../Image',boardcode+".jpeg")).toString();
+    try {
+        const boardcode = req.params.boardcode;
+        let png = fs.statSync(path.join(__dirname, '../Image', boardcode + ".png")).isFile() ? fs.readFileSync(path.join(__dirname, '../Image', boardcode + ".png")).toString() : null;
+        let jpg = fs.statSync(path.join(__dirname, '../Image', boardcode + ".jpg")).isFile() ? fs.readFileSync(path.join(__dirname, '../Image', boardcode + ".jpg")).toString() : null;
+        let jpeg = fs.statSync(path.join(__dirname, '../Image', boardcode + ".jpeg")).isFile()? fs.readFileSync(path.join(__dirname, '../Image', boardcode + ".jpeg")).toString() : null;
 
-    let Image = png ?? jpg ?? jpeg
-    if(Image == undefined||Image == null){
-        return res.status(404).send("Not Found");
+        let Image = png ?? jpg ?? jpeg
+        if (Image == undefined || Image == null) {
+            return res.status(404).send("Not Found");
+        } else
+            res.status(200).send(png ?? jpg ?? jpeg);
+    } catch (e) {
+        console.log(e);
+        return res.status(500).send("Server Error");
     }
-    else
-        res.status(200).send(png ?? jpg ?? jpeg);
 });
 
 module.exports = router;
