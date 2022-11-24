@@ -37,8 +37,16 @@ router.get('/',async (req, res, next) => {
 router.post('/',auth,async (req, res, next) => {
     //console.log(req);
     let {Usercode,isAnonymous,contents,Image} = req.body;
+    let name;
     df = fs.readFileSync(path.join(__dirname,'test.json')).toString();
-    let test = {contents,Usercode};
+    models.users.findByPk(Usercode).then((result) => {
+        result = JSON.parse(JSON.stringify(result));
+        name = result.name;
+    }).catch((err) => {
+        console.error(err);
+        res.status(500).send('Server Error');
+    })
+    let test = {contents,Usercode,name};
     let a = JSON.parse(df);
     a.push(test);
     a = JSON.stringify(a);
