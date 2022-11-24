@@ -48,6 +48,8 @@ router.post('/',auth,async (req, res, next) => {
         a.push(test);
         a = JSON.stringify(a);
         fs.writeFileSync(path.join(__dirname,'test.json'),a);
+
+
     }).catch((err) => {
         console.error(err);
         res.status(500).send('Server Error');
@@ -63,13 +65,44 @@ router.post('/',auth,async (req, res, next) => {
         isAnonymous: isAnonymous,
         Image: Image
     }).then(() => {
-
+        ImageUp(req,res);
         return  res.status(200).send('Success');
     }).catch((err) => {
         console.error(err);
         return res.status(500).send('Server Error');
     })
 })
+function ImageUp(req,res){
+    try {
+
+        let file = req.body.Image;
+        const timeStamp = +new Date();
+        let fileName = __dirname + "\\Image\\test.png";
+        if (file != file.replace(/^data:image\/png;base64,/, "")) {
+            let fileName = __dirname + "\..\\Image\\"+ req.body.boardCode+".png";
+            file = file.replace(/^data:image\/png;base64,/, "");
+        }
+        else if (file != file.replace(/^data:image\/jpeg;base64,/, "")) {
+            let fileName = __dirname + "\..\\Image\\"+ req.body.boardCode+".png";
+            file = file.replace(/^data:image\/jpeg;base64,/, "");
+        }
+        else if (file != file.replace(/^data:image\/jpg;base64,/, "")) {
+            let fileName = __dirname + "\..\\Image\\"+ req.body.boardCode+".png";
+            file = file.replace(/^data:image\/jpg;base64,/, "");
+        }
+        else{
+            return;
+        }
+
+
+        fs.writeFileSync(fileName, file, "base64");
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send("Server Error");
+    }
+
+}
+
 
 router.delete('/',authManage,async (req, res, next) => {
 
@@ -97,10 +130,6 @@ router.post('/update',authManage,async (req, res, next) => {
         }).then((data) => {
         uploadInsta(req.body.boardCode);
         uploadFacebk(req.body.boardCode);
-
-
-
-
 
         //console.log(data);
         return res.status(200).send('Success');
