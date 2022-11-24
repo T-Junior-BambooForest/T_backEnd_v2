@@ -39,7 +39,7 @@ router.post('/',auth,async (req, res, next) => {
     let {Usercode,isAnonymous,contents,Image} = req.body;
     let name;
     df = fs.readFileSync(path.join(__dirname,'test.json')).toString();
-    models.users.findByPk(Usercode).then((result) => {
+    models.Users.findByPk(Usercode).then((result) => {
         result = JSON.parse(JSON.stringify(result));
         name = result.name;
     }).catch((err) => {
