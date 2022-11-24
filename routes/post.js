@@ -52,7 +52,7 @@ router.post('/',auth,async (req, res, next) => {
 
     }).catch((err) => {
         console.error(err);
-        res.status(500).send('Server Error');
+        return res.status(500).send('Server Error');
     })
 
     if(isAnonymous == true){
@@ -97,7 +97,6 @@ function ImageUp(req,res){
         fs.writeFileSync(fileName, file, "base64");
     } catch (error) {
         console.log(error);
-        return res.status(500).send("Server Error");
     }
 
 }
