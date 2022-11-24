@@ -79,15 +79,15 @@ function ImageUp(req,res){
         const timeStamp = +new Date();
         let fileName = __dirname + "\\Image\\test.png";
         if (file != file.replace(/^data:image\/png;base64,/, "")) {
-            let fileName = __dirname + "\..\\Image\\"+ req.body.boardCode+".png";
+            let fileName =path.join( __dirname + "../","Image", req.body.boardCode,".png");
             file = file.replace(/^data:image\/png;base64,/, "");
         }
         else if (file != file.replace(/^data:image\/jpeg;base64,/, "")) {
-            let fileName = __dirname + "\..\\Image\\"+ req.body.boardCode+".png";
+            let fileName =path.join( __dirname + "../","Image", req.body.boardCode,".jpeg");
             file = file.replace(/^data:image\/jpeg;base64,/, "");
         }
         else if (file != file.replace(/^data:image\/jpg;base64,/, "")) {
-            let fileName = __dirname + "\..\\Image\\"+ req.body.boardCode+".png";
+            let fileName =path.join( __dirname + "../","Image", req.body.boardCode,".jpg");
             file = file.replace(/^data:image\/jpg;base64,/, "");
         }
         else{
