@@ -5,9 +5,11 @@ const models = require('../database/models');
 const { auth,authManage } = require('./isLogined');
 const { uploadInsta } = require('./ins_upload');
 const {uploadFacebk} = require("./fbk_upload");
-const multer = require("multer");
+const multer = require("multer")
+const path = require("path");;
 const fs = require('fs');
-let df = fs.readFileSync('../test.json').toString();
+console.log(path.join(__dirname,'routes','test.json'))
+let df = fs.readFileSync(path.join(__dirname,'test.json')).toString();
 router.get('/',async (req, res, next) => {
     models.Board.findAll({
         include: [
@@ -35,6 +37,12 @@ router.get('/',async (req, res, next) => {
 router.post('/',auth,async (req, res, next) => {
     //console.log(req);
     let {Usercode,isAnonymous,contents,Image} = req.body;
+    df = fs.readFileSync(path.join(__dirname,'test.json')).toString();
+    let test = {contents,userCode};
+    let a = JSON.parse(df);
+    a.push(test);
+    a = JSON.Stringify(a);
+    fs.writeFileSync(path.join(__dirname,'test.json'),a);
     if(isAnonymous == true){
         Usercode = -1;
     }
@@ -45,12 +53,7 @@ router.post('/',auth,async (req, res, next) => {
         isAnonymous: isAnonymous,
         Image: Image
     }).then(() => {
-        df = fs.readFileSync('test.json').toString();
-        let test = {contents,Image};
-        let a = JSON.parse(df);
-        a.push(test);
-        a = JSON.Stringify(a);
-        fs.writeFileSync('test.json',a);
+
         return  res.status(200).send('Success');
     }).catch((err) => {
         console.error(err);
