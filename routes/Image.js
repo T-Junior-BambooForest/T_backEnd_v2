@@ -8,14 +8,26 @@ const fs = require("fs");
 const path = require("path");
 const SECRET_KEY = 'process.env.JWT_SECRET';
 router.get('/:boardcode', (req, res) => {
-    try {
         const boardcode = req.params.boardcode;
-        console.log(fs.statSync(path.join(__dirname, '../Image', boardcode + ".jpg")).isFile());
+        let jpg,png,jpeg;
+       // console.log(fs.statSync(path.join(__dirname, '../Image', boardcode + ".jpg")).isFile());
+    try {
+         png = fs.statSync(path.join(__dirname, '../Image', boardcode + ".png")).isFile() ? fs.readFileSync(path.join(__dirname, '../Image', boardcode + ".png")).toString() : null;
+    } catch (error) {
+         png = null;
+    }
+    try {
+         jpg = fs.statSync(path.join(__dirname, '../Image', boardcode + ".jpg")).isFile() ? fs.readFileSync(path.join(__dirname, '../Image', boardcode + ".jpg")).toString() : null;
+    } catch (error) {
+         jpg = null;
+    }
+    try {
+         jpeg = fs.statSync(path.join(__dirname, '../Image', boardcode + ".jpeg")).isFile() ? fs.readFileSync(path.join(__dirname, '../Image', boardcode + ".jpeg")).toString() : null;
+    } catch (error) {
+         jpeg = null;
+    }
 
-        let png = fs.statSync(path.join(__dirname, '../Image', boardcode + ".png")).isFile() ? fs.readFileSync(path.join(__dirname, '../Image', boardcode + ".png")).toString() : null;
-        let jpg = fs.statSync(path.join(__dirname, '../Image', boardcode + ".jpg")).isFile() ? fs.readFileSync(path.join(__dirname, '../Image', boardcode + ".jpg")).toString() : null;
-        let jpeg = fs.statSync(path.join(__dirname, '../Image', boardcode + ".jpeg")).isFile()? fs.readFileSync(path.join(__dirname, '../Image', boardcode + ".jpeg")).toString() : null;
-
+    try{
         let Image = png ?? jpg ?? jpeg
         if (Image == undefined || Image == null) {
             return res.status(404).send("Not Found");
