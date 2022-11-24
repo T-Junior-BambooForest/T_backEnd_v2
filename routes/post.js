@@ -94,10 +94,9 @@ function ImageUp(req,res,boardCode){
             file = file.replace(/^data:image\/jpg;base64,/, "");
         }
         else{
+            throw new Error("이미지가 아닙니다.");
             return;
         }
-
-
         fs.writeFileSync(fileName, file, "base64");
     } catch (error) {
         console.log(error);
