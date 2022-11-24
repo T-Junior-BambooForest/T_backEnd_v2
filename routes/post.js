@@ -64,7 +64,8 @@ router.post('/',auth,async (req, res, next) => {
         userCode: Usercode,
         isAnonymous: isAnonymous,
         Image: Image
-    }).then(() => {
+    }).then((result) => {
+        console.log(result);
         ImageUp(req,res);
         return  res.status(200).send('Success');
     }).catch((err) => {
