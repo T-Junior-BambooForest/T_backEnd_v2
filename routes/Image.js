@@ -32,7 +32,7 @@ router.get('/:boardcode', (req, res) => {
         if (Image == undefined || Image == null) {
             return res.status(404).send("Not Found");
         } else
-            res.status(200).send(<img src={Image} />);
+            res.status(200).send(`<img src={${Image}} />`);
     } catch (e) {
         console.log(e);
         return res.status(500).send("Server Error");
