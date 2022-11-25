@@ -32,7 +32,7 @@ exports.uploadInsta = async (data) => {
             where: {allowBoard: true, boardCode: data}
         }).then((result) => {
             result = JSON.parse(JSON.stringify(result));
-            console.log(result);
+            //console.log(result);
             caption = `부산소마고 대나무숲 ${result.AllowBoard.AllowBoardCode}번째 제보\n${result.contents}\n- ${result.User.name}님 제보 -`;
             result.Image == null ? notImage() : isImage(result);
         }).catch((err) => {
@@ -48,7 +48,7 @@ async function notImage() {
     mdurl = mediaUrl + "?image_url=" + logoImage + "&caption=" + caption + "&access_token=" + token;
     axios.post(mdurl)
         .then((res) => {
-            console.log(res.data.id);
+           // console.log(res.data.id);
             pburl = publishUrl + "?creation_id=" + res.data.id + "&access_token=" + token;
         }).then(() => {
         publish(pburl)
