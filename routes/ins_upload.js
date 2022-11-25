@@ -45,7 +45,7 @@ exports.uploadInsta = async (data) => {
 }
 
 async function notImage() {
-    mdurl = mediaUrl + "?image_url=" + logoImage + "&caption=" + caption + "&access_token=" + token;
+    mdurl = mediaUrl + "?image_url=" + logoImage + "&caption=" + encodeURI(caption) + "&access_token=" + token;
     axios.post(mdurl)
         .then((res) => {
            // console.log(res.data.id);
@@ -69,7 +69,7 @@ async function isImage(result){
                 .then((res) => {
                     userImageContainer = res.data.id;
                 }).then(() => {
-                    lastPublishContainer = mediaUrl + "?children=" + logoContainer + "," + userImageContainer + "&media_type=" + "CAROUSEL" +  "&caption=" + caption + "&access_token=" + token;
+                    lastPublishContainer = mediaUrl + "?children=" + logoContainer + "," + userImageContainer + "&media_type=" + "CAROUSEL" +  "&caption=" + encodeURI(caption) + "&access_token=" + token;
                     axios.post(lastPublishContainer);
             }).then(() => {
                 publish(lastPublishContainer)
