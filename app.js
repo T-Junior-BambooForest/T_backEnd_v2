@@ -11,6 +11,7 @@ const board = require('./routes/post');
 require("dotenv").config();
 const app = express()
 const Image = require('./routes/Image');
+let localLogin = require('./routes/localLogin');
 app.use(express.json({
     limit : "50mb"
 }));
@@ -43,6 +44,8 @@ models.sequelize.sync({ force: false })
 
 app.use('/oauth', oauth);
 app.use('/islogin', islogin);
+
+app.use('/localLogin', localLogin);
 //app.use('/logout', logout);
 app.use('/board',board);
 app.use('/image',Image);
