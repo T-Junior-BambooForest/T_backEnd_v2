@@ -35,46 +35,51 @@ router.get('/',async (req, res, next) => {
 
 
 router.post('/',auth,async (req, res, next) => {
-    //console.log(req);
-    let {Usercode,isAnonymous,contents,Image} = req.body;
-    let name;
-    df = fs.readFileSync(path.join(__dirname,'test.json')).toString();
-    models.Users.findByPk(Usercode).then((result) => {
-        result = JSON.parse(JSON.stringify(result));
-        name = result.name;
-        console.log(name);
-        let test = {contents,Usercode,name};
-        let a = JSON.parse(df);
-        a.push(test);
-        a = JSON.stringify(a);
-        fs.writeFileSync(path.join(__dirname,'test.json'),a);
+    try {
+        //console.log(req);
+        let {Usercode, isAnonymous, contents, Image} = req.body;
+        let name;
+        df = fs.readFileSync(path.join(__dirname, 'test.json')).toString();
+        models.Users.findByPk(Usercode).then((result) => {
+            result = JSON.parse(JSON.stringify(result));
+            name = result.name;
+            console.log(name);
+            let test = {contents, Usercode, name};
+            let a = JSON.parse(df);
+            a.push(test);
+            a = JSON.stringify(a);
+            fs.writeFileSync(path.join(__dirname, 'test.json'), a);
 
 
-    }).catch((err) => {
-        console.error(err);
+        }).catch((err) => {
+            console.error(err);
+            return res.status(500).send('Server Error');
+        })
+
+        if (isAnonymous == true) {
+            Usercode = -1;
+        }
+        models.Board.create({
+            contents: contents,
+            allowBoard: false,
+            userCode: Usercode,
+            isAnonymous: isAnonymous,
+            Image: Image
+        }).then((result) => {
+            //console.log(result);
+            let boardCode = (result.dataValues.boardCode).toString();
+            console.log(boardCode);
+            //    console.log(JSON.parse(JSON.stringify(result));)
+            if (Image) ImageUp(req, res, boardCode);
+            return res.status(200).send('Success');
+        }).catch((err) => {
+            console.error(err);
+            return res.status(500).send('Server Error');
+        })
+    } catch (error) {
+        console.error(error);
         return res.status(500).send('Server Error');
-    })
-
-    if(isAnonymous == true){
-        Usercode = -1;
     }
-    models.Board.create({
-        contents : contents,
-        allowBoard: false,
-        userCode: Usercode,
-        isAnonymous: isAnonymous,
-        Image: Image
-    }).then((result) => {
-        //console.log(result);
-        let boardCode = (result.dataValues.boardCode).toString();
-        console.log(boardCode);
-       //    console.log(JSON.parse(JSON.stringify(result));)
-        ImageUp(req,res, boardCode);
-        return  res.status(200).send('Success');
-    }).catch((err) => {
-        console.error(err);
-        return res.status(500).send('Server Error');
-    })
 })
 function ImageUp(req,res,boardCode){
     try {
