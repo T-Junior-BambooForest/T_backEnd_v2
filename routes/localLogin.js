@@ -53,7 +53,6 @@ router.post('/register', Noauth, (req, res) => {
         let a = JSON.parse(df);
         password = bcrypt.hashSync(password, 12, (err, hash) => {
             if (err) throw err;
-            console.log(hash);
             return hash;
         });
         let User = `Insert Into users Values ( ${(9000 + a.length)},"${name}", "2023" , 99, 99 ,"99", "${name}" );`;
