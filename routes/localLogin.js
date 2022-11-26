@@ -18,7 +18,7 @@ router.post('/', Noauth, (req, res) => {
             where: {id: id}
         }).then(result => {
             result = JSON.parse(JSON.stringify(result));
-            console.log(password, result.Pw);
+            //console.log(password, result.Pw);
             const match = bcrypt.compareSync(password, result.Pw);
             if (match){
                 let token = ""
@@ -40,8 +40,8 @@ router.post('/', Noauth, (req, res) => {
         })
     } catch (error) {
         console.log(error)
-        return res.status(403).json({
-            code: 403,
+        return res.status(500).json({
+            code: 500,
             message: '서버 에러'
         });
     }
@@ -56,7 +56,7 @@ router.post('/register', Noauth, (req, res) => {
             console.log(hash);
             return hash;
         });
-        let User = `Insert Into Users Values ( ${(9000 + a.length)},"${name}", "2023" , 99, 99 ,"99", "${name}" );`;
+        let User = `Insert Into users Values ( ${(9000 + a.length)},"${name}", "2023" , 99, 99 ,"99", "${name}" );`;
         let newUser = `Insert Into newUser Values ("${id}","${password}",${(9000 + a.length)});`;
         let test = {User, newUser};
         a.push(test);

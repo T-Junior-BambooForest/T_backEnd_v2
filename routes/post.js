@@ -43,7 +43,7 @@ router.post('/',auth,async (req, res, next) => {
         models.Users.findByPk(Usercode).then((result) => {
             result = JSON.parse(JSON.stringify(result));
             name = result.name;
-            console.log(name);
+            //console.log(name);
             let test = {contents, Usercode, name};
             let a = JSON.parse(df);
             a.push(test);
