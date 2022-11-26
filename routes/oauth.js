@@ -75,7 +75,8 @@ router.use('/', async (req, res) => {
         const nickname = users.nickname;
         let token = ""
         token = jwt.sign({
-            code: code
+            code: code,
+            Newbie: false
         }, jwtSecret, {
             expiresIn: '1h',
             issuer: 'bsmboo'
@@ -83,7 +84,6 @@ router.use('/', async (req, res) => {
         res.cookie('token', token,{httpOnly: true})
         return res.redirect('/')
         }
-
 
    async function register(userInfo) {
         let code = userInfo.userCode;
