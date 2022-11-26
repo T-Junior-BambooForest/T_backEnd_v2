@@ -12,6 +12,7 @@ function NotManger(message) {
 }
 exports.auth = (req, res, next) => {
     try {
+        console.log(req.cookies.token)
         req.decoded = jwt.verify(req.cookies.token, SECRET_KEY);
         return next();
     }
@@ -37,6 +38,9 @@ exports.authManage = (req, res, next) => {
     // 인증 완료
     try {
         req.decoded = jwt.verify(req.cookies.token, SECRET_KEY);
+        if(req.decoded.Newbie) {return
+            throw new NotManger('관리자가 아닙니다')
+        };
         if(req.decoded.code === 66 || req.decoded.code === 45 || req.decoded.code === 43) {
             return next();
         } else {
@@ -65,5 +69,15 @@ exports.authManage = (req, res, next) => {
                 message: '관리자만 접근 가능합니다.'
             });
         }
+    }
+}
+
+exports.Noauth = (req, res, next) => {
+    try {
+        req.decoded = jwt.verify(req.cookies.token, SECRET_KEY);
+        return res.status(403).send('이미 로그인 되어있습니다');
+    }
+    catch (error) {
+        return next();
     }
 }
