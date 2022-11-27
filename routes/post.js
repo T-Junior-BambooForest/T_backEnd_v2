@@ -76,7 +76,7 @@ router.post('/',auth,async (req, res, next) => {
             if (Image) {
                 ImageUp(req, res, boardCode);
                 models.Board.update(
-                    {ImageLink: "https://api.bsmboo.kro.kr/image/" + boardCode },
+                    {Image: "https://api.bsmboo.kro.kr/image/" + boardCode },
                     {where: {boardCode: boardCode}}
                 );
             }
