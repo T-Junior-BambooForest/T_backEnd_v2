@@ -49,17 +49,17 @@ async function notImage() {
     mdurl = mediaUrl + "?image_url=" + logoImage + "&caption=" + encodeURI(caption) + "&access_token=" + token;
     axios.post(mdurl)
         .then((res) => {
-           // console.log(res.data.id);
+            // console.log(res.data.id);
             pburl = publishUrl + "?creation_id=" + res.data.id + "&access_token=" + token;
         }).then(() => {
         publish(pburl)
-        }).catch((err) => {
-            console.error(err);
-        })
+    }).catch((err) => {
+        console.error(err);
+    })
 }
 
 
-async function isImage(result){
+async function isImage(result) {
     console.log(result);
     mdurl = mediaUrl + "?image_url=" + logoImage + "&is_carousel_item=" + "true" + "&access_token=" + token;
     userImageUrl = mediaUrl + "?image_url=" + result.Image + "&is_carousel_item=" + "true" + "&access_token=" + token; // null 부분에 유저 이미지 링크 첨부
@@ -67,25 +67,25 @@ async function isImage(result){
         .then((res) => {
             logoContainer = res.data.id;
         }).then(() => {
-            axios.post(userImageUrl)
-                .then((res) => {
-                    userImageContainer = res.data.id;
-                }).then(() => {
-                    lastPublishContainer = mediaUrl + "?children=" + logoContainer + "," + userImageContainer + "&media_type=" + "CAROUSEL" +  "&caption=" + encodeURI(caption) + "&access_token=" + token;
-                    axios.post(lastPublishContainer);
-            }).then((res) => {
+        axios.post(userImageUrl)
+            .then((res) => {
+                userImageContainer = res.data.id;
+            }).then(() => {
+            lastPublishContainer = mediaUrl + "?children=" + logoContainer + "," + userImageContainer + "&media_type=" + "CAROUSEL" + "&caption=" + encodeURI(caption) + "&access_token=" + token;
+            axios.post(lastPublishContainer).then((res) => {
                 lastPublishUrl = publishUrl + "?creation_id=" + res.data.id + "&access_token=" + token;
                 publish(lastPublishUrl)
-            }).catch((err) => {
-                console.log(err);
             })
-    })
-}
-
-async function publish(pburl) {
-    axios.post(pburl)
-        .then(() => console.log(`success`))
-        .catch((err) => {
-            console.error(err);
         })
-}
+    }).catch((err) => {
+        console.log(err);
+    })
+    }
+
+    function publish(pburl) {
+        axios.post(pburl)
+            .then(() => console.log(`success`))
+            .catch((err) => {
+                console.error(err);
+            })
+    }
