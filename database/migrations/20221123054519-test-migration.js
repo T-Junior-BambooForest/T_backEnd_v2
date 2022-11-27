@@ -3,7 +3,7 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     return queryInterface.changeColumn('Board', 'Image', {
-      type: Sequelize.DataTypes.BLOB('long')
+      type: Sequelize.DataTypes.STRING
     });
   },
 
