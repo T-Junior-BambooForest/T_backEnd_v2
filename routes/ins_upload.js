@@ -14,6 +14,7 @@ let userImageUrl = null;
 let logoContainer = null;
 let userImageContainer = null;
 let lastPublishContainer = null;
+let lastPublishUrl = null;
 
 exports.uploadInsta = async (data) => {
     try {
@@ -71,8 +72,9 @@ async function isImage(result){
                 }).then(() => {
                     lastPublishContainer = mediaUrl + "?children=" + logoContainer + "," + userImageContainer + "&media_type=" + "CAROUSEL" +  "&caption=" + encodeURI(caption) + "&access_token=" + token;
                     axios.post(lastPublishContainer);
-            }).then(() => {
-                publish(lastPublishContainer)
+            }).then((res) => {
+                lastPublishUrl = publishUrl + "?creation_id=" + res.data.id + "&access_token=" + token;
+                publish(lastPublishUrl)
             }).catch((err) => {
                 console.log(err);
             })
