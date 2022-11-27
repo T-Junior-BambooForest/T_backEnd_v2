@@ -27,9 +27,7 @@ router.get('/',async (req, res, next) => {
     }).then((result) => {
         result = JSON.parse(JSON.stringify(result));
         result.map((a) => {
-
             let content = a.contents
-            //console.log(typeof content);
             a.contents = content.replace(/\n/g,'<br>');
         });
         return res.json(result.reverse());
@@ -78,7 +76,7 @@ router.post('/',auth,async (req, res, next) => {
             if (Image) {
                 ImageUp(req, res, boardCode);
                 models.Board.update(
-                    {Image: "https://api.bsmboo.kro.kr/image/" + boardCode },
+                    {ImageLink: "https://api.bsmboo.kro.kr/image/" + boardCode },
                     {where: {boardCode: boardCode}}
                 );
             }
