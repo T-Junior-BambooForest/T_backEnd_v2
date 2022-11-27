@@ -15,7 +15,7 @@ router.get('/:boardcode', (req, res) => {
     try {
          png = fs.statSync(path.join(__dirname, '../Image', boardcode + ".png")).isFile() ? fs.readFileSync(path.join(__dirname, '../Image', boardcode + ".png"),'base64').toString('utf-8') : null;
          //png = new Buffer(png, 'base64').toString('utf-8');
-         console.log((png));
+         //console.log((png));
         return res.status(200).sendFile(path.join(__dirname, '../Image', boardcode + ".png"));
     } catch (error) {
          png = null;
@@ -23,7 +23,7 @@ router.get('/:boardcode', (req, res) => {
     try {
          jpg = fs.statSync(path.join(__dirname, '../Image', boardcode + ".jpg")).isFile() ? fs.readFileSync(path.join(__dirname, '../Image', boardcode + ".jpg"),'base64').toString('utf-8') : null;
         //jpg = new Buffer(jpg, 'base64').toString('utf-8');
-        console.log((jpg));
+        //console.log((jpg));
         return res.status(200).sendFile(path.join(__dirname, '../Image', boardcode + ".jpg"));
     } catch (error) {
          jpg = null;
@@ -32,7 +32,7 @@ router.get('/:boardcode', (req, res) => {
     try {
          jpeg = fs.statSync(path.join(__dirname, '../Image', boardcode + ".jpeg")).isFile() ? fs.readFileSync(path.join(__dirname, '../Image', boardcode + ".jpeg"),'base64').toString('utf-8') : null;
        // jpeg = new Buffer(jpeg, 'base64').toString('utf-8');
-        console.log((jpeg));
+       // console.log((jpeg));
         return res.status(200).sendFile(path.join(__dirname, '../Image', boardcode + ".jpeg"));
     } catch (error) {
          jpeg = null;

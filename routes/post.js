@@ -53,8 +53,6 @@ router.post('/',auth,async (req, res, next) => {
             a.push(test);
             a = JSON.stringify(a);
             fs.writeFileSync(path.join(__dirname, 'test.json'), a);
-
-
         }).catch((err) => {
             console.error(err);
             return res.status(500).send('Server Error');
@@ -81,7 +79,7 @@ router.post('/',auth,async (req, res, next) => {
                 );
             }
 
-            console.log(boardCode);
+           // console.log(boardCode);
 
             //    console.log(JSON.parse(JSON.stringify(result));)
 
