@@ -26,6 +26,9 @@ router.get('/',async (req, res, next) => {
         where: {allowBoard: true}
     }).then((result) => {
         result = JSON.parse(JSON.stringify(result));
+        result.forEach((element) => {
+            element.contents = element.contents.replaceAll("\n", '<br>');
+        });
         return res.json(result.reverse());
     }).catch((err) => {
         console.error(err);
@@ -59,6 +62,7 @@ router.post('/',auth,async (req, res, next) => {
         if (isAnonymous == true) {
             Usercode = -1;
         }
+
         models.Board.create({
             contents: contents,
             allowBoard: false,
@@ -68,9 +72,18 @@ router.post('/',auth,async (req, res, next) => {
         }).then((result) => {
             //console.log(result);
             let boardCode = (result.dataValues.boardCode).toString();
+            if (Image) {
+                ImageUp(req, res, boardCode);
+                models.Board.update(
+                    {Image: "https://api.bsmboo.kro.kr/image/" + boardCode },
+                    {where: {boardCode: boardCode}}
+                );
+            }
+
             console.log(boardCode);
+
             //    console.log(JSON.parse(JSON.stringify(result));)
-            if (Image) ImageUp(req, res, boardCode);
+
             return res.status(200).send('Success');
         }).catch((err) => {
             console.error(err);
@@ -81,7 +94,7 @@ router.post('/',auth,async (req, res, next) => {
         return res.status(500).send('Server Error');
     }
 })
-function ImageUp(req,res,boardCode){
+async function ImageUp(req,res,boardCode){
     try {
 
         let file = req.body.Image;
