@@ -76,7 +76,9 @@ router.post('/',auth,async (req, res, next) => {
                 models.Board.update(
                     {Image: "https://api.bsmboo.kro.kr:8000/image/" + boardCode },
                     {where: {boardCode: boardCode}}
-                );
+                ).then(() => {
+                    console.log("이미지 저장")
+                });
             }
 
            // console.log(boardCode);
