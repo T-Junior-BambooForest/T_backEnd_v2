@@ -1,18 +1,1 @@
-[
-  {
-    "User": "Insert Into Users Values(9000,섹스, \"2023\" , 99, 99 ,\"99\",섹스);",
-    "newUser": "Insert Into newUser Values(9000,test,$2b$12$uA3GILWxfBaUkP1PJkvfj.1JA/2aowz/3bD6bLJ77PZv/XtCuCHpq);"
-  },
-  {
-    "User": "Insert Into Users Values ( 9001,\"섹스\", \"2023\" , 99, 99 ,\"99\", \"섹스\" );",
-    "newUser": "Insert Into newUser Values ( 9001 ,  \"test\" ,  \"$2b$12$Xho88eR1J4esYT28FMtlfOFAOUfOow4P/Yu4/aaF/skaIULTwXkbS\");"
-  },
-  {
-    "User": "Insert Into Users Values ( 9002,\"섹스\", \"2023\" , 99, 99 ,\"99\", \"섹스\" );",
-    "newUser": "Insert Into newUser Values (\"test\",\"$2b$12$jHJVoEHVU26k3B4AxIVRaupVM/TK34aMPkmHLQ8wP.aktKg26ZFuy\",9002);"
-  },
-  {
-    "User": "Insert Into users Values ( 9003,\"박우빈\", \"2023\" , 99, 99 ,\"99\", \"박우빈\" );",
-    "newUser": "Insert Into newUser Values (\"Ubinqutious\",\"$2b$12$PuaQklVZ2UpgllEQdZkB9.iBqgChhaGAoWiVrdjTSJpNsF/9CWaR6\",9003);"
-  }
-]
+[]
