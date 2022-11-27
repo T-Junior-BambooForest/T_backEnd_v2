@@ -27,7 +27,7 @@ router.get('/',async (req, res, next) => {
     }).then((result) => {
         result = JSON.parse(JSON.stringify(result));
         result.map((element) => {
-            console.log(element);
+            //console.log(element);
             element.contents = element.contents.replaceAll("\n", '<br>');
         });
         return res.json(result.reverse());
