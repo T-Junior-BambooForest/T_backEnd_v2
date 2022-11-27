@@ -60,6 +60,7 @@ async function notImage() {
 
 
 async function isImage(result){
+    console.log(result);
     mdurl = mediaUrl + "?image_url=" + logoImage + "&is_carousel_item=" + "true" + "&access_token=" + token;
     userImageUrl = mediaUrl + "?image_url=" + result.Image + "&is_carousel_item=" + "true" + "&access_token=" + token; // null 부분에 유저 이미지 링크 첨부
     axios.post(mdurl)
