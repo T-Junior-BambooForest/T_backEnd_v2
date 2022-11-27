@@ -12,7 +12,7 @@ function NotManger(message) {
 }
 exports.auth = (req, res, next) => {
     try {
-        console.log(req.cookies.token)
+        //console.log(req.cookies.token)
         req.decoded = jwt.verify(req.cookies.token, SECRET_KEY);
         return next();
     }
