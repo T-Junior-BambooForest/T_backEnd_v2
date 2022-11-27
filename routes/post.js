@@ -67,7 +67,7 @@ router.post('/',auth,async (req, res, next) => {
             allowBoard: false,
             userCode: Usercode,
             isAnonymous: isAnonymous,
-            Image: Image
+            Image: null
         }).then((result) => {
             //console.log(result);
             let boardCode = (result.dataValues.boardCode).toString();
