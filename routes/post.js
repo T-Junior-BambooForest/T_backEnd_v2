@@ -26,7 +26,7 @@ router.get('/',async (req, res, next) => {
         where: {allowBoard: true}
     }).then((result) => {
         result = JSON.parse(JSON.stringify(result));
-        result.forEach((element) => {
+        result.map((element) => {
             element.contents = element.contents.replaceAll("\n", '<br>');
         });
         return res.json(result.reverse());
