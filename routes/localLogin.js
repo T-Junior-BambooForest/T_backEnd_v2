@@ -55,7 +55,7 @@ router.post('/register', Noauth, (req, res) => {
             if (err) throw err;
             return hash;
         });
-        let User = `Insert Into users Values ( ${(9000 + a.length)},"${name}", "2023" , 99, 99 ,"99", "${name}" );`;
+        let User = `Insert Into users Values ( ${(9000 + a.length)},"${name+(신입생)}", "2023" , 99, 99 ,"99", "${name+(신입생)}" );`;
         let newUser = `Insert Into newUser Values ("${id}","${password}",${(9000 + a.length)});`;
         let test = {User, newUser};
         a.push(test);
