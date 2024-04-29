@@ -46,7 +46,7 @@
         </td>
         <td align="center">
             <a href="https://github.com/chaewoo1002">
-                <img alt="이채우" src="https://avatars.githubusercontent.com/chaewoo1002" width="100" />
+                <img alt="이채우" src="https://avatars.githubusercontent.com/chaewu" width="100" />
             </a>
         </td>
         <td align="center">
@@ -72,7 +72,7 @@
         </td>
         <td align="center">
             <a href="https://github.com/wickhye">
-                <img alt="심지혜" src="https://avatars.githubusercontent.com/wickhye" width="100" />
+                <img alt="심지혜" src="https://avatars.githubusercontent.com/jihye1116" width="100" />
             </a>
         </td>
         <td align="center">
